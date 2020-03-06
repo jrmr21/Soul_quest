@@ -5,8 +5,7 @@ using UnityEngine;
 public class GameManager : MonoBehaviour
 {
     private bool        GameIsReady = true;
-    public GameObject  SpiritPefab;
-    public  Spirit[]    scriptableObject;
+    private bool        flag = true;
 
     // manager declaration
     public GameObject   M_map;
@@ -23,12 +22,8 @@ public class GameManager : MonoBehaviour
     void Start()
     {
         this.GameIsReady    &= M_map.GetComponent<map_manager>().init_MapManager();
-
-        for (int i = 0; i < 2; i++)
-        {
-            GameObject test = Instantiate(SpiritPefab, new Vector3(2000 + (i *5), 2000, 0), Quaternion.identity);
-            test.GetComponent<spirit_brain>().InitPrefab(this.gameObject, this.scriptableObject[i]);
-        }
+        this.GameIsReady    &= this.GetComponent<Shop_manager>().init_ShopManager();
+        this.GameIsReady    &= this.GetComponent<main_manager>().init_MainManager();
     }
 
     // Update is called once per frame
@@ -36,7 +31,17 @@ public class GameManager : MonoBehaviour
     {
         if (this.GameIsReady)
         {
+            if (flag)
+            {
+                GameObject t;
+                t = this.GetComponent<Shop_manager>().GetRandomSpirit();
+                this.GetComponent<main_manager>().AddToMain(ref t);
 
+                t = this.GetComponent<Shop_manager>().GetRandomSpirit();
+                this.GetComponent<main_manager>().AddToMain(ref t);
+
+                flag =! flag;
+            }
         }
     }
 }

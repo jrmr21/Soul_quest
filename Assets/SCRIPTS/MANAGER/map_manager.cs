@@ -11,6 +11,7 @@ public class map_manager : MonoBehaviour
     private List<GameObject>[] MapListObject;
 
 
+
     public bool GetStatus()
     {
         return (this.init_status);

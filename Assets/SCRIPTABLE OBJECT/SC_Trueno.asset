@@ -13,8 +13,8 @@ MonoBehaviour:
   m_Name: SC_Trueno
   m_EditorClassIdentifier: Assembly-CSharp::Spirit
   name: Trueno
-  life: 200
-  family: 1
-  classe: 2
-  team: 1
-  skin: {fileID: 100000, guid: 66ad00b166b914e47acce78daea25aa6, type: 3}
+  life: 150
+  family: 0
+  classe: 0
+  team: 0
+  skin: {fileID: 100000, guid: 8fbcce33444d4ce4db5b61f8d0eeb7aa, type: 3}

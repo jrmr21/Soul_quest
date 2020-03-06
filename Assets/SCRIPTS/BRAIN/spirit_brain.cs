@@ -53,16 +53,8 @@ public class spirit_brain : MonoBehaviour
         return (this.team);
     }
 
-    // Update is called once per frame
-    void Update()
+    public void SetPosition(Vector3 vector)
     {
-        /*if (GMmap.activeInHierarchy && a)
-        {
-            GMmap.GetComponent<map_manager>().AddMapObject(this.gameObject);
-
-            GMmap.GetComponent<map_manager>().GetList((Team)1);
-
-            a = !a;
-        }*/
+        this.gameObject.transform.position += vector;
     }
 }
