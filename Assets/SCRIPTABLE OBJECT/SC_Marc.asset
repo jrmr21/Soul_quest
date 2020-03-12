@@ -10,11 +10,11 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 0}
-  m_Name: SC_Trueno
+  m_Name: SC_Marc
   m_EditorClassIdentifier: Assembly-CSharp::Spirit
-  name: Trueno
-  life: 150
+  name: 
+  life: 144
   family: 0
   classe: 0
-  team: 0
+  team: 1
   skin: {fileID: 100000, guid: 8fbcce33444d4ce4db5b61f8d0eeb7aa, type: 3}

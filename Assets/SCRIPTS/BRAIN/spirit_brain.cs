@@ -43,6 +43,7 @@ public class spirit_brain : MonoBehaviour
         // move skin at 0, 0, 0
         this.skin.transform.position = this.transform.position;
 
+
         return (true);
     }
 
@@ -71,12 +72,22 @@ public class spirit_brain : MonoBehaviour
         this.EnableTouch = status;
     }
 
-    /*      mouse version
+    //     mouse version
     private void DragAndDrop()
     {
+        float decalageX = 1.475f;
+        int Xinit = 1994;
+        float Xcenter = 1994.7375f;
+
+        float decalageZ = 1.425f;
+        float Zinit = -5.8f;
+        float Zcenter = -5.0875f;
+
+
         this.ray = Camera.main.ScreenPointToRay(Input.mousePosition);
         int layerMask = 1 << 9;
         layerMask = ~layerMask;
+
 
         if (Input.GetMouseButtonDown(0))
         {
@@ -84,6 +95,7 @@ public class spirit_brain : MonoBehaviour
             {
                 touchAct = true;
             }
+            Debug.Log(hit.transform.tag);
         }
         else if (Input.GetMouseButtonUp(0))
         {
@@ -93,16 +105,160 @@ public class spirit_brain : MonoBehaviour
         {
             if (Physics.Raycast(ray, out hit, 100, layerMask))
             {
+                Debug.Log(tag);
                 transform.position = new Vector3(this.hit.point.x, this.hit.point.y + 2f, this.hit.point.z);
-                if (this.hit.point.x < -3 && this.hit.point.x > -4)
+            }
+        } else if (touchAct == false)
+        {
+            if (this.hit.point.y > 1999.9999 && this.hit.point.y < 2000.0001)
+            {
+                if (this.hit.point.x > Xinit && this.hit.point.x < Xinit + (decalageX) && this.hit.point.z > Zinit && this.hit.point.z < Zinit + (decalageZ))
                 {
-                    transform.position = new Vector3(-3.5f, this.hit.point.y + 2f, this.hit.point.z);
+                    transform.position = new Vector3(Xcenter, this.hit.point.y, Zcenter);
                 }
-                Debug.Log(this.hit.point.x);
+                if (this.hit.point.x > Xinit && this.hit.point.x < Xinit + (decalageX) && this.hit.point.z > Zinit + (decalageZ) && this.hit.point.z < Zinit + (decalageZ * 2))
+                {
+                    transform.position = new Vector3(Xcenter, this.hit.point.y, Zcenter + (decalageZ));
+                }
+                if (this.hit.point.x > Xinit && this.hit.point.x < Xinit + (decalageX) && this.hit.point.z > Zinit + (decalageZ * 2) && this.hit.point.z < Zinit + (decalageZ * 3))
+                {
+                    transform.position = new Vector3(Xcenter, this.hit.point.y, Zcenter + (decalageZ * 2));
+                }
+                if (this.hit.point.x > Xinit && this.hit.point.x < Xinit + (decalageX) && this.hit.point.z > Zinit + (decalageZ * 3) && this.hit.point.z < Zinit + (decalageZ * 4))
+                {
+                    transform.position = new Vector3(Xcenter, this.hit.point.y, Zcenter + (decalageZ * 3));
+                }
+
+
+                if (this.hit.point.x > Xinit + (decalageX) && this.hit.point.x < Xinit + (decalageX * 2) && this.hit.point.z > Zinit && this.hit.point.z < Zinit + (decalageZ))
+                {
+                    transform.position = new Vector3(Xcenter + (decalageX), this.hit.point.y, Zcenter);
+                }
+                if (this.hit.point.x > Xinit + (decalageX) && this.hit.point.x < Xinit + (decalageX * 2) && this.hit.point.z > Zinit + (decalageZ) && this.hit.point.z < Zinit + (decalageZ * 2))
+                {
+                    transform.position = new Vector3(Xcenter + (decalageX), this.hit.point.y, Zcenter + (decalageZ));
+                }
+                if (this.hit.point.x > Xinit + (decalageX) && this.hit.point.x < Xinit + (decalageX * 2) && this.hit.point.z > Zinit + (decalageZ * 2) && this.hit.point.z < Zinit + (decalageZ * 3))
+                {
+                    transform.position = new Vector3(Xcenter + (decalageX), this.hit.point.y, Zcenter + (decalageZ * 2));
+                }
+                if (this.hit.point.x > Xinit + (decalageX) && this.hit.point.x < Xinit + (decalageX * 2) && this.hit.point.z > Zinit + (decalageZ * 3) && this.hit.point.z < Zinit + (decalageZ * 4))
+                {
+                    transform.position = new Vector3(Xcenter + (decalageX), this.hit.point.y, Zcenter + (decalageZ * 3));
+                }
+
+
+                if (this.hit.point.x > Xinit + (decalageX * 2) && this.hit.point.x < Xinit + (decalageX * 3) && this.hit.point.z > Zinit && this.hit.point.z < Zinit + (decalageZ))
+                {
+                    transform.position = new Vector3(Xcenter + (decalageX * 2), this.hit.point.y, Zcenter);
+                }
+                if (this.hit.point.x > Xinit + (decalageX * 2) && this.hit.point.x < Xinit + (decalageX * 3) && this.hit.point.z > Zinit + (decalageZ) && this.hit.point.z < Zinit + (decalageZ * 2))
+                {
+                    transform.position = new Vector3(Xcenter + (decalageX * 2), this.hit.point.y, Zcenter + (decalageZ));
+                }
+                if (this.hit.point.x > Xinit + (decalageX * 2) && this.hit.point.x < Xinit + (decalageX * 3) && this.hit.point.z > Zinit + (decalageZ * 2) && this.hit.point.z < Zinit + (decalageZ * 3))
+                {
+                    transform.position = new Vector3(Xcenter + (decalageX * 2), this.hit.point.y, Zcenter + (decalageZ * 2));
+                }
+                if (this.hit.point.x > Xinit + (decalageX * 2) && this.hit.point.x < Xinit + (decalageX * 3) && this.hit.point.z > Zinit + (decalageZ * 3) && this.hit.point.z < Zinit + (decalageZ * 4))
+                {
+                    transform.position = new Vector3(Xcenter + (decalageX * 2), this.hit.point.y, Zcenter + (decalageZ * 3));
+                }
+
+
+                if (this.hit.point.x > Xinit + (decalageX * 3) && this.hit.point.x < Xinit + (decalageX * 4) && this.hit.point.z > Zinit && this.hit.point.z < Zinit + (decalageZ))
+                {
+                    transform.position = new Vector3(Xcenter + (decalageX * 3), this.hit.point.y, Zcenter);
+                }
+                if (this.hit.point.x > Xinit + (decalageX * 3) && this.hit.point.x < Xinit + (decalageX * 4) && this.hit.point.z > Zinit + (decalageZ) && this.hit.point.z < Zinit + (decalageZ * 2))
+                {
+                    transform.position = new Vector3(Xcenter + (decalageX * 3), this.hit.point.y, Zcenter + (decalageZ));
+                }
+                if (this.hit.point.x > Xinit + (decalageX * 3) && this.hit.point.x < Xinit + (decalageX * 4) && this.hit.point.z > Zinit + (decalageZ * 2) && this.hit.point.z < Zinit + (decalageZ * 3))
+                {
+                    transform.position = new Vector3(Xcenter + (decalageX * 3), this.hit.point.y, Zcenter + (decalageZ * 2));
+                }
+                if (this.hit.point.x > Xinit + (decalageX * 3) && this.hit.point.x < Xinit + (decalageX * 4) && this.hit.point.z > Zinit + (decalageZ * 3) && this.hit.point.z < Zinit + (decalageZ * 4))
+                {
+                    transform.position = new Vector3(Xcenter + (decalageX * 3), this.hit.point.y, Zcenter + (decalageZ * 3));
+                }
+
+
+                if (this.hit.point.x > Xinit + (decalageX * 4) && this.hit.point.x < Xinit + (decalageX * 5) && this.hit.point.z > Zinit && this.hit.point.z < Zinit + (decalageZ))
+                {
+                    transform.position = new Vector3(Xcenter + (decalageX * 4), this.hit.point.y, Zcenter);
+                }
+                if (this.hit.point.x > Xinit + (decalageX * 4) && this.hit.point.x < Xinit + (decalageX * 5) && this.hit.point.z > Zinit + (decalageZ) && this.hit.point.z < Zinit + (decalageZ * 2))
+                {
+                    transform.position = new Vector3(Xcenter + (decalageX * 4), this.hit.point.y, Zcenter + (decalageZ));
+                }
+                if (this.hit.point.x > Xinit + (decalageX * 4) && this.hit.point.x < Xinit + (decalageX * 5) && this.hit.point.z > Zinit + (decalageZ * 2) && this.hit.point.z < Zinit + (decalageZ * 3))
+                {
+                    transform.position = new Vector3(Xcenter + (decalageX * 4), this.hit.point.y, Zcenter + (decalageZ * 2));
+                }
+                if (this.hit.point.x > Xinit + (decalageX * 4) && this.hit.point.x < Xinit + (decalageX * 5) && this.hit.point.z > Zinit + (decalageZ * 3) && this.hit.point.z < Zinit + (decalageZ * 4))
+                {
+                    transform.position = new Vector3(Xcenter + (decalageX * 4), this.hit.point.y, Zcenter + (decalageZ * 3));
+                }
+
+
+                if (this.hit.point.x > Xinit + (decalageX * 5) && this.hit.point.x < Xinit + (decalageX * 6) && this.hit.point.z > Zinit && this.hit.point.z < Zinit + (decalageZ))
+                {
+                    transform.position = new Vector3(Xcenter + (decalageX * 5), this.hit.point.y, Zcenter);
+                }
+                if (this.hit.point.x > Xinit + (decalageX * 5) && this.hit.point.x < Xinit + (decalageX * 6) && this.hit.point.z > Zinit + (decalageZ) && this.hit.point.z < Zinit + (decalageZ * 2))
+                {
+                    transform.position = new Vector3(Xcenter + (decalageX * 5), this.hit.point.y, Zcenter + (decalageZ));
+                }
+                if (this.hit.point.x > Xinit + (decalageX * 5) && this.hit.point.x < Xinit + (decalageX * 6) && this.hit.point.z > Zinit + (decalageZ * 2) && this.hit.point.z < Zinit + (decalageZ * 3))
+                {
+                    transform.position = new Vector3(Xcenter + (decalageX * 5), this.hit.point.y, Zcenter + (decalageZ * 2));
+                }
+                if (this.hit.point.x > Xinit + (decalageX * 5) && this.hit.point.x < Xinit + (decalageX * 6) && this.hit.point.z > Zinit + (decalageZ * 3) && this.hit.point.z < Zinit + (decalageZ * 4))
+                {
+                    transform.position = new Vector3(Xcenter + (decalageX * 5), this.hit.point.y, Zcenter + (decalageZ * 3));
+                }
+
+
+                if (this.hit.point.x > Xinit + (decalageX * 6) && this.hit.point.x < Xinit + (decalageX * 7) && this.hit.point.z > Zinit && this.hit.point.z < Zinit + (decalageZ))
+                {
+                    transform.position = new Vector3(Xcenter + (decalageX * 6), this.hit.point.y, Zcenter);
+                }
+                if (this.hit.point.x > Xinit + (decalageX * 6) && this.hit.point.x < Xinit + (decalageX * 7) && this.hit.point.z > Zinit + (decalageZ) && this.hit.point.z < Zinit + (decalageZ * 2))
+                {
+                    transform.position = new Vector3(Xcenter + (decalageX * 6), this.hit.point.y, Zcenter + (decalageZ));
+                }
+                if (this.hit.point.x > Xinit + (decalageX * 6) && this.hit.point.x < Xinit + (decalageX * 7) && this.hit.point.z > Zinit + (decalageZ * 2) && this.hit.point.z < Zinit + (decalageZ * 3))
+                {
+                    transform.position = new Vector3(Xcenter + (decalageX * 6), this.hit.point.y, Zcenter + (decalageZ * 2));
+                }
+                if (this.hit.point.x > Xinit + (decalageX * 6) && this.hit.point.x < Xinit + (decalageX * 7) && this.hit.point.z > Zinit + (decalageZ * 3) && this.hit.point.z < Zinit + (decalageZ * 4))
+                {
+                    transform.position = new Vector3(Xcenter + (decalageX * 6), this.hit.point.y, Zcenter + (decalageZ * 3));
+                }
+
+
+                if (this.hit.point.x > Xinit + (decalageX * 7) && this.hit.point.x < Xinit + (decalageX * 8) && this.hit.point.z > Zinit && this.hit.point.z < Zinit + (decalageZ))
+                {
+                    transform.position = new Vector3(Xcenter + (decalageX * 7), this.hit.point.y, Zcenter);
+                }
+                if (this.hit.point.x > Xinit + (decalageX * 7) && this.hit.point.x < Xinit + (decalageX * 8) && this.hit.point.z > Zinit + (decalageZ) && this.hit.point.z < Zinit + (decalageZ * 2))
+                {
+                    transform.position = new Vector3(Xcenter + (decalageX * 7), this.hit.point.y, Zcenter + (decalageZ));
+                }
+                if (this.hit.point.x > Xinit + (decalageX * 7) && this.hit.point.x < Xinit + (decalageX * 8) && this.hit.point.z > Zinit + (decalageZ * 2) && this.hit.point.z < Zinit + (decalageZ * 3))
+                {
+                    transform.position = new Vector3(Xcenter + (decalageX * 7), this.hit.point.y, Zcenter + (decalageZ * 2));
+                }
+                if (this.hit.point.x > Xinit + (decalageX * 7) && this.hit.point.x < Xinit + (decalageX * 8) && this.hit.point.z > Zinit + (decalageZ * 3) && this.hit.point.z < Zinit + (decalageZ * 4))
+                {
+                    transform.position = new Vector3(Xcenter + (decalageX * 7), this.hit.point.y, Zcenter + (decalageZ * 3));
+                }
             }
         }
-    }*/
+    }
 
+    /*
     private void DragAndDrop()
     {
         int layerMask = 1 << 9;
@@ -134,7 +290,7 @@ public class spirit_brain : MonoBehaviour
             }
         }
     }
-
+    */
     // Update is called once per frame
     void Update()
     {

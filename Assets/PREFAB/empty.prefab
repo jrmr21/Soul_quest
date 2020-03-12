@@ -11,7 +11,7 @@ GameObject:
   - component: {fileID: 4783045833132563965}
   - component: {fileID: 1676994513079220988}
   - component: {fileID: 2787695265208466319}
-  m_Layer: 8
+  m_Layer: 9
   m_Name: BarBackgroundCircle
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -85,7 +85,7 @@ GameObject:
   - component: {fileID: 5223408587450469084}
   - component: {fileID: 6799064094859916034}
   - component: {fileID: 5895367166788001528}
-  m_Layer: 8
+  m_Layer: 9
   m_Name: UI ProgressBarCircle
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -255,7 +255,7 @@ GameObject:
   - component: {fileID: 8430503323986231083}
   - component: {fileID: 6385723738526492977}
   - component: {fileID: 3568244312949344752}
-  m_Layer: 8
+  m_Layer: 9
   m_Name: Mask
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -328,7 +328,7 @@ GameObject:
   - component: {fileID: 3122503252245936249}
   - component: {fileID: 7259770117406570266}
   - component: {fileID: 3906320568514048595}
-  m_Layer: 8
+  m_Layer: 9
   m_Name: Text
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -405,7 +405,7 @@ GameObject:
   - component: {fileID: 494175664873221361}
   - component: {fileID: 3779671250278333601}
   - component: {fileID: 6577977907739561266}
-  m_Layer: 8
+  m_Layer: 9
   m_Name: BarCircle
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -479,9 +479,10 @@ GameObject:
   - component: {fileID: 8859792607893525391}
   - component: {fileID: 8448156268237889882}
   - component: {fileID: -3907630333715506065}
-  m_Layer: 8
+  - component: {fileID: -5758091168194106651}
+  m_Layer: 9
   m_Name: empty
-  m_TagString: Untagged
+  m_TagString: Player
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -513,7 +514,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 71c006995fdf3ee46be19fb4bb7bc10d, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  touchAct: 0
 --- !u!195 &8448156268237889882
 NavMeshAgent:
   m_ObjectHideFlags: 0
@@ -547,8 +547,22 @@ BoxCollider:
   m_IsTrigger: 0
   m_Enabled: 1
   serializedVersion: 2
-  m_Size: {x: 1, y: 1, z: 1}
-  m_Center: {x: 0, y: 0, z: 0}
+  m_Size: {x: 1.7, y: 1.5, z: 1.6}
+  m_Center: {x: 0.1, y: 0.5, z: -0.165}
+--- !u!64 &-5758091168194106651
+MeshCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8560223329007030993}
+  m_Material: {fileID: 0}
+  m_IsTrigger: 0
+  m_Enabled: 0
+  serializedVersion: 3
+  m_Convex: 0
+  m_CookingOptions: 14
+  m_Mesh: {fileID: 0}
 --- !u!1 &8569357756548540324
 GameObject:
   m_ObjectHideFlags: 0
@@ -561,7 +575,7 @@ GameObject:
   - component: {fileID: 3961300721160122936}
   - component: {fileID: 6656067237583837282}
   - component: {fileID: 6753617346305305612}
-  m_Layer: 8
+  m_Layer: 9
   m_Name: Canvas
   m_TagString: Untagged
   m_Icon: {fileID: 0}

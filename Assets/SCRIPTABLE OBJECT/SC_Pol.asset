@@ -10,11 +10,11 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 0}
-  m_Name: SC_Polo
+  m_Name: SC_Pol
   m_EditorClassIdentifier: Assembly-CSharp::Spirit
-  name: Polo
-  life: 150
+  name: 
+  life: 144
   family: 0
-  classe: 1
-  team: 0
-  skin: {fileID: 100000, guid: 639050e749c3ce444a196d84e803b067, type: 3}
+  classe: 0
+  team: 1
+  skin: {fileID: 100014, guid: 339800bf98dbd724ab008fe102ef15bb, type: 3}
