@@ -25,13 +25,17 @@ public class SpiritList : MonoBehaviour
         int index = Random.Range(0, (this.GetListSize() - 1));
 
         if (index < 0)
+        {
             return (null);
-
+        }
+        else
+        {
             // copy object like
-        tempo = this.ListObject[index];
+            tempo = this.ListObject[index];
 
             // remove this object to list
-        this.ListObject.RemoveAt(index);
+            this.ListObject.RemoveAt(index);
+        }
 
             // return get object
         return (tempo);

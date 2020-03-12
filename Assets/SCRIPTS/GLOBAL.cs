@@ -22,17 +22,17 @@ public enum Team
 
 public class GlobalVar
 {
-    public const int SizeOfTeam     = 2;
-    public const int MaxSpiritOnMap = 10;
-    public const int MaxSpiritMain  = 8;
+    public const int SizeOfTeam         = 2;
+    public const int MaxSpiritOnBoard   = 10;
+    public const int MaxSpiritMain      = 8;
 
 
     // you need 3 spirit per character (3 x all types of character)
     public const int SizeOfFusion   = 3;
-    public int SizeOfShop           = (3 * 
+    public static int SizeOfShop    = (9 * 
                             (Enum.GetValues(typeof(Classe)).Length * Enum.GetValues(typeof(Family)).Length));
 
-    
-    public const int SizeOfIthem    = 4;    // tempo value
+
+    public static int SizeOfIthem = 4;//(Enum.GetValues(typeof(Classe)).Length * Enum.GetValues(typeof(Family)).Length);    // tempo value
 }
 

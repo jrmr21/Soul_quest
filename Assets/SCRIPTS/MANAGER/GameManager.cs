@@ -44,12 +44,13 @@ public class GameManager : MonoBehaviour
             {
                 GameObject t;
 
-                for (int i = 0; i < 4; i++)
+                for (int i = 0; i < GlobalVar.MaxSpiritMain; i++)
                 {
                     t = this.GetComponent<Shop_manager>().GetRandomSpirit();
                     this.Player_main.AddToMain(ref t);
 
                     t = this.GetComponent<Shop_manager>().GetRandomSpirit();
+                    t.GetComponent<spirit_brain>().SetDragAndDrop(false);
                     this.IA_main.AddToMain(ref t);
                 }
 

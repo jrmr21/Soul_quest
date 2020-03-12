@@ -36,7 +36,7 @@ public class Shop_manager : SpiritList
             Debug.Log("create 3: " + this.scriptableObject[i].name);
 #endif
         }
-
+        
             // small checking
         if (this.GetListSize() == (GlobalVar.SizeOfFusion * GlobalVar.SizeOfIthem))
         {
