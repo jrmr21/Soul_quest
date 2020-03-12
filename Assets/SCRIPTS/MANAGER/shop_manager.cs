@@ -25,11 +25,11 @@ public class Shop_manager : SpiritList
             {
                     // create spirit
                 GameObject NewSpirit = Instantiate(SpiritPefab, new Vector3(0, 0, 0), Quaternion.identity);
-
-                    // add skin to spirit
+                
+                // add skin to spirit
                 NewSpirit.GetComponent<spirit_brain>().InitPrefab(this.gameObject, this.scriptableObject[i]);
-
-                    // add new spirit to shop's list
+                
+                // add new spirit to shop's list
                 this.AddListObject(ref NewSpirit);
             }
 #if (UNITY_DEBUG_SHOP_MANAGER_DETAILS)

@@ -4,11 +4,13 @@ using UnityEngine;
 
 public class main_manager : SpiritList
 {
-    private bool status = false;
-    private float start_pos = 0;
+    private bool        status      = false;
+    private Vector3     MainPos;
+    private float       step        = 1.52f;
 
+    public GameObject   MapMain;
 
-    public bool init_MainManager()
+    public bool init_MainManager(ref GameObject map)
     {
 #if (UNITY_DEBUG_MAIN_MANAGER)
         Debug.Log("init Main Manager");
@@ -17,19 +19,25 @@ public class main_manager : SpiritList
             // create list of spirit
         this.InitList();
 
+        this.MapMain = map;
+
         return (true);
     }
 
-    public void AddToMain(ref GameObject spirit)
+    public bool AddToMain(ref GameObject spirit)
     {
-        Vector3 v = new Vector3(1994.7f + start_pos, 2000, -5.34f);
+        if (this.GetListSize() < GlobalVar.MaxSpiritMain)
+        {
+            this.AddListObject(ref spirit);
+            this.ListObject[(this.GetListSize() - 1)].GetComponent<spirit_brain>().SetPosition(
+                this.MapMain.transform.GetChild(this.GetListSize() - 1).transform.position);
 
-        this.start_pos += 1.35f;
-
-        this.AddListObject(ref spirit);
-        this.ListObject[(this.GetListSize() - 1)].GetComponent<spirit_brain>().SetPosition(v);
-
-        Debug.Log("my size " + this.GetListSize() + " my name " + this.ListObject[(this.GetListSize() - 1)].GetComponent<spirit_brain>().GetName());
+            return (true);
+        }
+        else
+        {
+            return (false);
+        }
     }
 
 }

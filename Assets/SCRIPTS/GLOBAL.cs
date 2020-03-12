@@ -24,6 +24,7 @@ public class GlobalVar
 {
     public const int SizeOfTeam     = 2;
     public const int MaxSpiritOnMap = 10;
+    public const int MaxSpiritMain  = 8;
 
 
     // you need 3 spirit per character (3 x all types of character)

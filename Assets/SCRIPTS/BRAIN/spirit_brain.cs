@@ -29,8 +29,8 @@ public class spirit_brain : MonoBehaviour
         this.team               = this.scriptableObject.team;
 
             // create skin
-        this.skin = Instantiate(this.scriptableObject.skin) as GameObject;
-        this.skin.transform.parent = this.gameObject.transform;
+        this.skin                   = Instantiate(this.scriptableObject.skin) as GameObject;
+        this.skin.transform.parent  = this.gameObject.transform;
 
             // move skin at 0, 0, 0
         this.skin.transform.position = this.transform.position;
