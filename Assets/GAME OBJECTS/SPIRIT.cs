@@ -5,7 +5,7 @@ using UnityEngine;
 [CreateAssetMenu (fileName = "NEW SPIRIT", menuName = "SPIRIT")]
 public class Spirit : ScriptableObject
 {
-    public string       name;
+    public new string       name;
     public float        life;
 
     public Family       family;

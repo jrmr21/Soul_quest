@@ -5,10 +5,16 @@ EditorBuildSettings:
   m_ObjectHideFlags: 0
   serializedVersion: 2
   m_Scenes:
-  - enabled: 1
+  - enabled: 0
     path: Assets/SCENES/scene1.unity
     guid: d7956b8b9710962489e9ce64f62039b7
-  - enabled: 1
+  - enabled: 0
     path: Assets/SCENES/scene2.unity
     guid: de6fc115fb763ac46bfe387c7b73d347
+  - enabled: 0
+    path: Assets/SCENES/automatic_attack.unity
+    guid: 38d33f6bed632904bb22068891765609
+  - enabled: 1
+    path: Assets/SCENES/jrmr_scene.unity
+    guid: d0523548cd5d2984187df11098937598
   m_configObjects: {}

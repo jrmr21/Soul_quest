@@ -9,13 +9,12 @@ public class GameManager : MonoBehaviour
 
     // manager declaration
     public  GameObject  M_map;
+    public  GameObject  Player_main;
+    public  GameObject  IA_main;
 
-        // main map
+    // main map
     public GameObject   MapMain1;
     public GameObject   MapMain2;
-
-    private main_manager Player_main    = new main_manager();
-    private main_manager IA_main        = new main_manager();
 
 
     // Start is called before the first frame update
@@ -28,11 +27,13 @@ public class GameManager : MonoBehaviour
      * */
     void Start()
     {
+        Screen.SetResolution(1280, 720, true);
+
         this.GameIsReady    &= M_map.GetComponent<map_manager>().init_MapManager();
         this.GameIsReady    &= this.GetComponent<Shop_manager>().init_ShopManager();
 
-        this.GameIsReady    &= this.Player_main.init_MainManager(ref this.MapMain1);
-        this.GameIsReady    &= this.IA_main.init_MainManager(ref this.MapMain2);
+        this.GameIsReady    &= this.Player_main.GetComponent <main_manager>().init_MainManager(ref this.MapMain1);
+        this.GameIsReady    &= this.IA_main.GetComponent<main_manager>().init_MainManager(ref this.MapMain2);
     }
 
     // Update is called once per frame
@@ -47,11 +48,11 @@ public class GameManager : MonoBehaviour
                 for (int i = 0; i < GlobalVar.MaxSpiritMain; i++)
                 {
                     t = this.GetComponent<Shop_manager>().GetRandomSpirit();
-                    this.Player_main.AddToMain(ref t);
+                    this.Player_main.GetComponent<main_manager>().AddToMain(ref t);
 
                     t = this.GetComponent<Shop_manager>().GetRandomSpirit();
                     t.GetComponent<spirit_brain>().SetDragAndDrop(false);
-                    this.IA_main.AddToMain(ref t);
+                    this.IA_main.GetComponent<main_manager>().AddToMain(ref t);
                 }
 
                 flag =! flag;

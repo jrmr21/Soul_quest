@@ -27,7 +27,7 @@ public class cube : MonoBehaviour
         {
             if (Input.GetMouseButtonDown(0))
             {
-                RaycastHit hit;
+                //RaycastHit hit;
                 Ray ray = Camera.main.ScreenPointToRay(Input.mousePosition);
 
                 

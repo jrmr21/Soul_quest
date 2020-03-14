@@ -13,7 +13,14 @@ public class SpiritList : MonoBehaviour
 
     protected bool AddListObject(ref GameObject character)
     {
-        this.ListObject.Add(character);
+        if (character == null)
+        {
+            return (false);
+        }
+        else
+        {
+            this.ListObject.Add(character);
+        }
         return (true);
     }
 

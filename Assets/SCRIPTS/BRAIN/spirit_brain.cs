@@ -20,7 +20,7 @@ public class spirit_brain : MonoBehaviour
     private Ray ray;
 
 
-    public bool InitPrefab(GameObject Master, Spirit data)
+    public bool InitPrefab(GameObject Master, ref Spirit data)
     {
         // get tools
         this.Master = Master;
@@ -37,7 +37,7 @@ public class spirit_brain : MonoBehaviour
         coll = this.GetComponentInChildren<Collider>();
 
         // create skin
-        this.skin = Instantiate(this.scriptableObject.skin) as GameObject;
+        this.skin = Instantiate(this.scriptableObject.skin);
         this.skin.transform.parent = this.gameObject.transform;
 
         // move skin at 0, 0, 0
@@ -63,6 +63,9 @@ public class spirit_brain : MonoBehaviour
 
     public void SetPosition(Vector3 vector)
     {
+#if (UNITY_DEBUG_BRAIN_DETAILS)
+        Debug.Log("move Spirit at " + vector);
+#endif
         this.gameObject.transform.position += vector;
     }
 

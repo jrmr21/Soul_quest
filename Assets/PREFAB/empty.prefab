@@ -513,7 +513,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 71c006995fdf3ee46be19fb4bb7bc10d, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  touchAct: 0
 --- !u!195 &8448156268237889882
 NavMeshAgent:
   m_ObjectHideFlags: 0

@@ -7,6 +7,8 @@ public class Shop_manager : SpiritList
     private bool                status = false;
 
     public GameObject           SpiritPefab;
+
+    [Header("Scriptable Object:")]
     public Spirit[]             scriptableObject;
 
 
@@ -21,13 +23,17 @@ public class Shop_manager : SpiritList
 
         for (int i = 0; i < GlobalVar.SizeOfIthem; i++)     // count differents type of character
         {
+            Spirit _test = (Spirit)ScriptableObject.CreateInstance(typeof(Spirit));
+            _test = this.scriptableObject[i];
+
+
             for (int j = 0; j < GlobalVar.SizeOfFusion; j++)    // count multiple character for fusion
             {
-                    // create spirit
+                // create spirit
                 GameObject NewSpirit = Instantiate(SpiritPefab, new Vector3(0, 0, 0), Quaternion.identity);
                 
                 // add skin to spirit
-                NewSpirit.GetComponent<spirit_brain>().InitPrefab(this.gameObject, this.scriptableObject[i]);
+                NewSpirit.GetComponent<spirit_brain>().InitPrefab(this.gameObject, ref _test);
                 
                 // add new spirit to shop's list
                 this.AddListObject(ref NewSpirit);
