@@ -9,12 +9,12 @@ MonoBehaviour:
   m_GameObject: {fileID: 0}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 0}
-  m_Name: g
-  m_EditorClassIdentifier: Assembly-CSharp::Spirit
-  name: dd
-  life: 45
-  family: 1
-  classe: 0
+  m_Script: {fileID: 11500000, guid: 646ae83eb2ae79841a94eedd17509610, type: 3}
+  m_Name: b
+  m_EditorClassIdentifier: 
+  name: b
+  life: 444
+  family: 0
+  classe: 2
   team: 1
-  skin: {fileID: 196802, guid: b6c7ad354ac474944ba26b2895a59759, type: 3}
+  skin: {fileID: 114028, guid: c8fd22b231eb21044877d00d325c7079, type: 3}

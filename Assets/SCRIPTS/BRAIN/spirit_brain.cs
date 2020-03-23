@@ -8,7 +8,7 @@ public class spirit_brain : MonoBehaviour
     private Spirit scriptableObject;
 
     private ProgressBarCircle Pb;
-    private string name;
+    private string m_name;
     private float life;
     private Team team;
     private GameObject skin;
@@ -30,9 +30,9 @@ public class spirit_brain : MonoBehaviour
         this.transform.name = this.scriptableObject.name;
 
         // set data
-        this.name = this.scriptableObject.name;
-        this.life = this.scriptableObject.life;
-        this.team = this.scriptableObject.team;
+        this.m_name = this.scriptableObject.name;
+        this.life   = this.scriptableObject.life;
+        this.team   = this.scriptableObject.team;
 
         coll = this.GetComponentInChildren<Collider>();
 
@@ -53,7 +53,7 @@ public class spirit_brain : MonoBehaviour
 
     public string GetName()
     {
-        return (this.name);
+        return (this.m_name);
     }
 
     public Team GetTeam()
