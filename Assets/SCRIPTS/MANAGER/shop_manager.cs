@@ -7,7 +7,9 @@ public class Shop_manager : SpiritList
     private bool                status = false;
 
     public GameObject           SpiritPefab;
-    public Spirit[]             scriptableObject;
+
+    // [Header("Scriptable Object:")]
+    public Spirit[]            m_scriptableObject;
 
 
     public bool init_ShopManager()
@@ -23,17 +25,19 @@ public class Shop_manager : SpiritList
         {
             for (int j = 0; j < GlobalVar.SizeOfFusion; j++)    // count multiple character for fusion
             {
-                    // create spirit
+                // create spirit
+                //GameObject NewSpirit = new GameObject();
+
                 GameObject NewSpirit = Instantiate(SpiritPefab, new Vector3(0, 0, 0), Quaternion.identity);
-                
+
                 // add skin to spirit
-                NewSpirit.GetComponent<spirit_brain>().InitPrefab(this.gameObject, this.scriptableObject[i]);
+                NewSpirit.GetComponent<spirit_brain>().InitPrefab(this.gameObject, ref this.m_scriptableObject[i]);
                 
                 // add new spirit to shop's list
                 this.AddListObject(ref NewSpirit);
             }
 #if (UNITY_DEBUG_SHOP_MANAGER_DETAILS)
-            Debug.Log("create 3: " + this.scriptableObject[i].name);
+            Debug.Log("create 9: " + this.scriptableObject[i].name);
 #endif
         }
         
