@@ -24,11 +24,11 @@ public class GlobalVar
 {
     public const int SizeOfTeam         = 2;
     public const int MaxSpiritOnBoard   = 10;
-    public const int MaxSpiritMain      = 8;
+    public const int MaxSpiritMain      = 7;
 
 
     // you need 3 spirit per character (3 x all types of character)
-    public const int SizeOfFusion   = 3;
+    public const int SizeOfFusion   = 9;
     public static int SizeOfShop    = (9 * 
                             (Enum.GetValues(typeof(Classe)).Length * Enum.GetValues(typeof(Family)).Length));
 
