@@ -15,7 +15,7 @@ public class main_manager : SpiritList
 #if (UNITY_DEBUG_MAIN_MANAGER)
         Debug.Log("init Main Manager");
 #endif
-            // create list of spirit
+        // create list of spirit
         this.InitList();
 
         this.MapMain = map;
