@@ -66,16 +66,18 @@ public class GameManager : MonoBehaviour
         {
             if (Physics.Raycast(ray, out hit, 100, layerMask))
             {
-                try
-                {
-                    //Debug.Log("cible1 " + this.hit.transform.parent.name);
-                    character = this.hit.transform.parent.gameObject ;
-                    character.GetComponent<spirit_brain>().SetDragAndDrop(true);
-                }
-                catch
-                {
-                    character = null;
-                }
+                 //Debug.Log("cible1 " + this.hit.transform.name);
+                        try
+                        {
+                            Debug.Log("cible1 " + this.hit.transform.name);
+                            character = this.hit.transform.gameObject;
+                            character.GetComponent<spirit_brain>().SetDragAndDrop(true);
+                        }
+                        catch
+                        {
+                            Debug.Log("ciff");
+                            character = null;
+                        }
             }
         }
         else if(Input.GetMouseButtonUp(0))
@@ -102,7 +104,7 @@ public class GameManager : MonoBehaviour
                 {
                     if (Physics.Raycast(ray, out hit, 100, layerMask))
                     {
-                        Debug.Log("cible1 " + this.hit.transform.name);
+                        //Debug.Log("cible1 " + this.hit.transform.name);
                         try
                         {
                             Debug.Log("cible1 " + this.hit.transform.name);
