@@ -10,7 +10,7 @@ public class main_manager : SpiritList
 
     public GameObject   MapMain;
 
-    public bool init_MainManager(ref GameObject map)
+    public bool init_MainManager(GameObject map)
     {
 #if (UNITY_DEBUG_MAIN_MANAGER)
         Debug.Log("init Main Manager");
@@ -34,6 +34,13 @@ public class main_manager : SpiritList
 #endif
                 this.ListObject[this.GetListSize() - 1].GetComponent<spirit_brain>().SetPosition(
                     this.MapMain.transform.GetChild(this.GetListSize() - 1).transform.position);
+
+                if (string.Compare("player_front", this.transform.parent.name) == 0)
+                {
+                    this.ListObject[this.GetListSize() - 1].transform.Rotate(0, 180, 0);
+                }
+
+                this.ListObject[this.GetListSize() - 1].GetComponent<spirit_brain>().AttachToParent(this.gameObject);
 
                 return (true);
             }

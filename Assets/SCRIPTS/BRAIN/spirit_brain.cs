@@ -4,8 +4,10 @@ using UnityEngine;
 
 public class spirit_brain : MonoBehaviour
 {
-    private GameObject Master;
-    private Spirit scriptableObject;
+    private GameObject          Master;
+    private Spirit              scriptableObject;
+
+    private Animator            anim;
 
     private ProgressBarCircle   Pb;
     private string              m_name;
@@ -45,8 +47,17 @@ public class spirit_brain : MonoBehaviour
         this.SetPosition(this.transform.position);
         this.origin_position         = this.transform.position;
 
+        anim = this.transform.GetChild(1).GetComponent<Animator>();
 
-        //Debug.Log("pos " + this.skin.transform.position);
+        Debug.Log("anim " + this.transform.GetChild(1).name + " " + anim);
+
+
+        if (null != anim)
+        {
+            // play Bounce but start at a quarter of the way though
+            //anim.Play("idle");
+        }
+
 
 #if (UNITY_FINGER_MODE || UNITY_MOUSE_MODE)
         return (true);
@@ -69,7 +80,6 @@ public class spirit_brain : MonoBehaviour
     {
         return (this.team);
     }
-
   
     public void SetPosition(Vector3 vector)
     {
@@ -87,6 +97,15 @@ public class spirit_brain : MonoBehaviour
         this.EnableTouch = status;
     }
 
+    public void AttachToParent(GameObject dady)
+    {
+        this.transform.parent = dady.transform;
+    }
+
+    public void DettachToParent(GameObject dady)
+    {
+        this.transform.parent = null;
+    }
 
     //     mouse version example by Julien the BEST
     /*
@@ -302,7 +321,9 @@ public class spirit_brain : MonoBehaviour
             {
                 try
                 {
-                    if (string.Compare(this.hit.transform.gameObject.transform.parent.parent.name,"fight_main") == 0)
+                        // check if we are in same family
+                    if (string.Compare(this.hit.transform.gameObject.transform.parent.parent.parent.name,
+                                        this.transform.gameObject.transform.parent.parent.name) == 0)
                     {
 #if (UNITY_DEBUG_BRAIN_DETAILS)
                         Debug.Log("succes position !");
@@ -367,10 +388,12 @@ public class spirit_brain : MonoBehaviour
                     {
                         try
                         {
-                            if (string.Compare(this.hit.transform.gameObject.transform.parent.parent.name,"fight_main") == 0)
+                                // check if we are in same family
+                            if (string.Compare(this.hit.transform.gameObject.transform.parent.parent.parent.name,
+                                        this.transform.gameObject.transform.parent.parent.name) == 0)
                             {
 #if (UNITY_DEBUG_BRAIN_DETAILS)
-                                Debug.Log("succes position ! " + this.hit.transform.gameObject.transform.name);
+                                Debug.Log("succes position !");
 #endif
                                 this.SetPosition(this.hit.transform.gameObject.transform.position);
                             }
@@ -413,8 +436,8 @@ public class spirit_brain : MonoBehaviour
         {
 #if (UNITY_FINGER_MODE || UNITY_MOUSE_MODE)
             DragAndDrop();
-            Debug.Log("I'm touch enable " + this.GetName());
 #endif
         }
+
     }
 }
