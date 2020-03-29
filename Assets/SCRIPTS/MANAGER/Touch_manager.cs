@@ -14,6 +14,10 @@ public class Touch_manager : MonoBehaviour
 
     public bool init_TouchManager()
     {
+#if (UNITY_DEBUG_TOUCH_MANAGER)
+        Debug.Log("init touch Manager");
+#endif
+
         this.EnableTouch = true;
 
         return (true);

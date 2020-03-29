@@ -1,14 +1,18 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.AI;
 
 public class spirit_brain : MonoBehaviour
 {
+        // brain tools
     private GameObject          Master;
     private Spirit              scriptableObject;
+    private int                 fightIndex = -1;
 
     private Animator            anim;
 
+        // character tools
     private ProgressBarCircle   Pb;
     private string              m_name;
     private float               life;
@@ -16,6 +20,13 @@ public class spirit_brain : MonoBehaviour
     private GameObject          skin;
     private Vector3             origin_position;
 
+    // navigation tools
+    private Transform       Target = null;
+    private NavMeshAgent    agent;
+    private bool            Fnavigate  = false;
+    private Vector3         UpdatePos;
+
+    // touch tools
     private bool EnableTouch    = false;
     private bool touchAct       = false;
     private Collider coll;
@@ -28,6 +39,12 @@ public class spirit_brain : MonoBehaviour
         // get tools
         this.Master             = Master;
         this.scriptableObject   = data;
+
+        this.GetComponent<NavMeshAgent>().Warp(this.transform.position);
+        agent = GetComponent<NavMeshAgent>();
+        agent.stoppingDistance = 2f;
+
+        Target = null;
 
         // change name
         this.transform.name     = this.scriptableObject.name;
@@ -49,7 +66,7 @@ public class spirit_brain : MonoBehaviour
 
         anim = this.transform.GetChild(1).GetComponent<Animator>();
 
-        Debug.Log("anim " + this.transform.GetChild(1).name + " " + anim);
+        //Debug.Log("anim " + this.transform.GetChild(1).name + " " + anim);
 
 
         if (null != anim)
@@ -107,7 +124,73 @@ public class spirit_brain : MonoBehaviour
         this.transform.parent = null;
     }
 
-    //     mouse version example by Julien the BEST
+    public bool SetFight(bool status)
+    {
+            this.Fnavigate = status;
+
+            if (status == false)
+            {
+                this.agent.enabled = false;
+                this.SetPosition(this.origin_position);
+            }
+            else
+            {
+                this.agent.enabled = true;
+            }
+
+            return (true);
+    }
+    
+    public bool SetTarget(Transform newTarget)
+    {
+            // check if we can navigate or not before set target
+        if (this.Fnavigate)
+        {
+            this.Target = newTarget;
+            return (true);
+        }
+        else
+        {
+            this.Target = null;
+            return (false);
+        }
+    }
+
+    public void SetIndexFight(int index)
+    {
+        this.fightIndex = index;
+    }
+
+    public int GetIndexFight()
+    {
+        return (this.fightIndex);
+    }
+
+    private bool IsMoving()
+    {
+        bool status = false;
+
+        if (this.transform.position == this.UpdatePos)
+        {
+            status = false;
+        }
+        else
+        {
+            status = true;
+        }
+
+        this.UpdatePos = this.transform.position;
+
+        return (status);
+    }
+
+    private void goToTarget()
+    {
+        this.GetComponent<NavMeshAgent>().SetDestination(Target.position);
+    }
+
+
+    //     mouse version example by Julien
     /*
     private void DragAndDrop()
     {
@@ -321,7 +404,7 @@ public class spirit_brain : MonoBehaviour
             {
                 try
                 {
-                        // check if we are in same family
+                    // check if we are in same family
                     if (string.Compare(this.hit.transform.gameObject.transform.parent.parent.parent.name,
                                         this.transform.gameObject.transform.parent.parent.name) == 0)
                     {
@@ -329,6 +412,25 @@ public class spirit_brain : MonoBehaviour
                         Debug.Log("succes position !");
 #endif
                         this.SetPosition(this.hit.transform.gameObject.transform.position);
+                        this.origin_position = this.transform.position;
+
+                        if (string.Compare(this.hit.transform.gameObject.transform.parent.parent.name,
+                                        GlobalVar.FightMap) == 0)
+                        {
+                            if (this.fightIndex == -1)
+                            {
+                                this.fightIndex = Master.GetComponent<Fight_manager>().addToFightTab(
+                                    this.gameObject, this.transform.gameObject.transform.parent.parent.name);
+                            }
+                        }
+                        else
+                        {
+                            if (this.fightIndex != -1)
+                            {
+                                Master.GetComponent<Fight_manager>().removeToFightTab(this.fightIndex,
+                                    this.transform.gameObject.transform.parent.parent.name);
+                            }
+                        }
                     }
                     else
                     {
@@ -396,6 +498,25 @@ public class spirit_brain : MonoBehaviour
                                 Debug.Log("succes position !");
 #endif
                                 this.SetPosition(this.hit.transform.gameObject.transform.position);
+                                this.origin_position = this.transform.position;
+
+                                if (string.Compare(this.hit.transform.gameObject.transform.parent.parent.name,
+                                        GlobalVar.FightMap) == 0)
+                                {
+                                    if (this.fightIndex == -1)
+                                    {
+                                        this.fightIndex = Master.GetComponent<Fight_manager>().addToFightTab(
+                                            this.gameObject, this.transform.gameObject.transform.parent.parent.name);
+                                    }
+                                }
+                                else
+                                {
+                                    if (this.fightIndex != -1)
+                                    {
+                                        Master.GetComponent<Fight_manager>().removeToFightTab(this.fightIndex,
+                                            this.transform.gameObject.transform.parent.parent.name);
+                                    }
+                                }
                             }
                             else
                             {
@@ -438,6 +559,16 @@ public class spirit_brain : MonoBehaviour
             DragAndDrop();
 #endif
         }
+        else if (this.Fnavigate)
+        {
+            if ((this.Target != null)  && (this.IsMoving() == true))
+            {
+                goToTarget();
+            }
+            else
+            {
 
+            }
+        }
     }
 }

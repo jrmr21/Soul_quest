@@ -32,15 +32,15 @@ public class main_manager : SpiritList
 #if (UNITY_DEBUG_MAIN_MANAGER_DETAILS)
                 Debug.Log("SUCCES to ADD " + spirit.name);
 #endif
-                this.ListObject[this.GetListSize() - 1].GetComponent<spirit_brain>().SetPosition(
+                this.ListObject[0][this.GetListSize() - 1].GetComponent<spirit_brain>().SetPosition(
                     this.MapMain.transform.GetChild(this.GetListSize() - 1).transform.position);
 
-                if (string.Compare("player_front", this.transform.parent.name) == 0)
+                if (string.Compare(GlobalVar.player_front, this.transform.parent.name) == 0)
                 {
-                    this.ListObject[this.GetListSize() - 1].transform.Rotate(0, 180, 0);
+                    this.ListObject[0][this.GetListSize() - 1].transform.Rotate(0, 180, 0);
                 }
 
-                this.ListObject[this.GetListSize() - 1].GetComponent<spirit_brain>().AttachToParent(this.gameObject);
+                this.ListObject[0][this.GetListSize() - 1].GetComponent<spirit_brain>().AttachToParent(this.gameObject);
 
                 return (true);
             }
