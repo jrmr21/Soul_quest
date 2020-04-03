@@ -7,24 +7,29 @@ public class GameManager : MonoBehaviour
 {
     private bool        GameIsReady = true;
     private bool        flag        = true;
+   
 
-    private int     flag_mode       = 0;
+    // tools time (display, count, GameObject Text, flag to change gameMode)
     private string  current_time    = "00";
     private double  start_time;
     private Text    text_cpt;
+    private int     flag_mode       = 0;
 
+
+    // timeout mode
     public int fight_time       = 0;
     public int prepare_time     = 0;
 
-    // manager declaration
-    public  GameObject  M_map;
 
-        // two players gameObject with all compomnent ( main map, fight map, main manager)
+    // two players gameObject with all compomnent ( main map, fight map, main manager)
     public  GameObject  Player_back     = null;
     public  GameObject  Player_front    = null;
 
         // all UI
     public GameObject Canevas;
+
+    // button to enable shop
+    public Button ShopButton;
 
 
     /*
@@ -44,13 +49,18 @@ public class GameManager : MonoBehaviour
         this.text_cpt = this.Canevas.gameObject.transform.GetChild(2).GetComponentInChildren<Text>();
         this.text_cpt.text = current_time;
 
+
             // init all managers
-        this.GameIsReady    &= M_map.GetComponent<map_manager>().init_MapManager();
-        this.GameIsReady    &= this.GetComponent<Shop_manager>().init_ShopManager();
+        this.GameIsReady    &= this.GetComponent<Shop_manager>().init_ShopManager(this.Canevas.gameObject.transform.GetChild(3).gameObject);
         this.GameIsReady    &= this.GetComponent<Touch_manager>().init_TouchManager();
         this.GameIsReady    &= this.GetComponent<Fight_manager>().init_FightManager();
 
-            // init "main_map" in main manager
+
+        // set listener button 
+        this.ShopButton.onClick.AddListener(enableShop);
+
+
+        // init "main_map" in main manager
         this.GameIsReady    &= this.Player_back.transform.GetChild(0).GetComponent <main_manager>().init_MainManager(
             this.Player_back.transform.GetChild(0).GetChild(0).gameObject);
 
@@ -70,6 +80,11 @@ public class GameManager : MonoBehaviour
 #endif
     }
     
+
+    private void enableShop()
+    {
+        this.Canevas.gameObject.transform.GetChild(3).gameObject.SetActive(true);
+    }
 
     // Update is called once per frame
     void Update()
@@ -97,10 +112,16 @@ public class GameManager : MonoBehaviour
                 // Prepare Mode
             if (this.flag_mode == 0)
             {
+                //  go to start Fight mode
                 if (((int)(Time.time - start_time)) > this.prepare_time)
                 {
+                        // disable all touch activity
                     this.GetComponent<Touch_manager>().set_EnableTouch(false);
 
+                    // disable shop (default command)
+                    this.GetComponent<Shop_manager>().disableShop();
+
+                        // swap UI Fight mode and Prepare mode
                     this.Canevas.gameObject.transform.GetChild(0).gameObject.SetActive(true);
                     this.Canevas.gameObject.transform.GetChild(1).gameObject.SetActive(false);
 
@@ -117,6 +138,7 @@ public class GameManager : MonoBehaviour
                 // Fight Mode
             else if(this.flag_mode == 1)
             {
+                    //  go to start Prepare mode
                 if (((int)(Time.time - start_time)) > this.fight_time)
                 {
                     this.GetComponent<Touch_manager>().set_EnableTouch(true);

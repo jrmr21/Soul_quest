@@ -15,11 +15,6 @@ public enum Classe
     archer, warrior, magician
 }
 
-public enum Team
-{
-    TeamA, TeamB
-}
-
 public class GlobalVar
 {
     public const int SizeOfTeam         = 2;

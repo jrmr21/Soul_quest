@@ -1,18 +1,24 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
 
 public class Shop_manager : SpiritList
 {
     private bool                status = false;
 
     public GameObject           SpiritPefab;
+    public GameObject           Canvas;
 
     // [Header("Scriptable Object:")]
     public Spirit[]            m_scriptableObject;
 
 
-    public bool init_ShopManager()
+    // button to enable shop
+    private Button BackButton;
+
+    // need shop canvas
+    public bool init_ShopManager(GameObject ui)
     {
 #if (UNITY_DEBUG_SHOP_MANAGER)
         Debug.Log("init Shop Manager");
@@ -20,6 +26,12 @@ public class Shop_manager : SpiritList
             // create list of gameObject
         this.InitList();
 
+        this.Canvas = ui;
+
+        this.BackButton = this.Canvas.transform.GetChild(1).GetComponent<Button>();
+
+        // set listener button 
+        this.BackButton.onClick.AddListener(disableShop);
 
         for (int i = 0; i < GlobalVar.SizeOfIthem; i++)     // count differents type of character
         {
@@ -67,5 +79,10 @@ public class Shop_manager : SpiritList
     public bool GetStatus()
     {
         return (this.status);
+    }
+
+    public void disableShop()
+    {
+        this.Canvas.SetActive(false);
     }
 }

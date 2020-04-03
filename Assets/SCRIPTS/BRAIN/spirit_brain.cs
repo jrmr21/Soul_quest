@@ -14,9 +14,7 @@ public class spirit_brain : MonoBehaviour
 
         // character tools
     private ProgressBarCircle   Pb;
-    private string              m_name;
     private float               life;
-    private Team                team;
     private GameObject          skin;
     private Vector3             origin_position;
 
@@ -50,9 +48,7 @@ public class spirit_brain : MonoBehaviour
         this.transform.name     = this.scriptableObject.name;
 
         // set data
-        this.m_name     = this.scriptableObject.name;
         this.life       = this.scriptableObject.life;
-        this.team       = this.scriptableObject.team;
 
         coll = this.GetComponentInChildren<Collider>();
 
@@ -90,14 +86,14 @@ public class spirit_brain : MonoBehaviour
 
     public string GetName()
     {
-        return (this.m_name);
+        return (this.scriptableObject.name);
     }
 
-    public Team GetTeam()
+    public int GetPrice()
     {
-        return (this.team);
+        return (this.scriptableObject.price);
     }
-  
+
     public void SetPosition(Vector3 vector)
     {
 #if (UNITY_DEBUG_BRAIN_DETAILS)
