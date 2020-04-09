@@ -83,7 +83,9 @@ public class GameManager : MonoBehaviour
 
     private void enableShop()
     {
-        this.Canevas.gameObject.transform.GetChild(3).gameObject.SetActive(true);
+            // send player in shop
+        this.GetComponent<Shop_manager>().enableShop(
+            this.Player_back.transform.GetChild(0).GetComponent<main_manager>());
     }
 
     // Update is called once per frame
@@ -95,15 +97,14 @@ public class GameManager : MonoBehaviour
             {
                 GameObject t;
 
-                for (int i = 0; i < GlobalVar.MaxSpiritMain; i++)
-                {
+                        // you
                     t = this.GetComponent<Shop_manager>().GetRandomSpirit();
                     this.Player_back.transform.GetChild(0).GetComponent<main_manager>().AddToMain(ref t);
 
+                        // AI
                     t = this.GetComponent<Shop_manager>().GetRandomSpirit();
                     t.GetComponent<spirit_brain>().SetDragAndDrop(false);
                     this.Player_front.transform.GetChild(0).GetComponent<main_manager>().AddToMain(ref t);
-                }
 
                 flag =! flag;
             }
@@ -150,6 +151,13 @@ public class GameManager : MonoBehaviour
 
                     flag_mode   = 0;              //  go to prepare mode
                     start_time  = Time.time;
+
+                    // add money
+                    this.Player_back.transform.GetChild(0).GetComponent<main_manager>().SetMoney(
+                        this.Player_back.transform.GetChild(0).GetComponent<main_manager>().GetMoney() + 3);
+
+                    this.Player_front.transform.GetChild(0).GetComponent<main_manager>().SetMoney(
+                        this.Player_front.transform.GetChild(0).GetComponent<main_manager>().GetMoney() + 3);
                 }
                 else
                 {

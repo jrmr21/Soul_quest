@@ -19,20 +19,20 @@ public class spirit_brain : MonoBehaviour
     private Vector3             origin_position;
 
     // navigation tools
-    private Transform       Target = null;
+    private Transform       Target      = null;
     private NavMeshAgent    agent;
-    private bool            Fnavigate  = false;
+    private bool            Fnavigate   = false;
     private Vector3         UpdatePos;
 
     // touch tools
-    private bool EnableTouch    = false;
-    private bool touchAct       = false;
-    private Collider coll;
-    private RaycastHit hit;
-    private Ray ray;
+    private bool        EnableTouch    = false;     // flag permission tou touch character
+    private bool        touchAct       = false;     // flag to know if you are touched or not
+    private Collider    coll;
+    private RaycastHit  hit;
+    private Ray         ray;
 
 
-    public bool InitPrefab(GameObject Master, ref Spirit data)
+    public  bool    InitPrefab(GameObject Master, ref Spirit data)
     {
         // get tools
         this.Master             = Master;
@@ -54,11 +54,11 @@ public class spirit_brain : MonoBehaviour
 
         // create skin
         this.skin = Instantiate(this.scriptableObject.skin);
-        this.skin.transform.parent = this.gameObject.transform;
+        this.skin.transform.parent  = this.gameObject.transform;
 
         // move skin at 0, 0, 0
         this.SetPosition(this.transform.position);
-        this.origin_position         = this.transform.position;
+        this.origin_position        = this.transform.position;
 
         anim = this.transform.GetChild(1).GetComponent<Animator>();
 
@@ -79,22 +79,22 @@ public class spirit_brain : MonoBehaviour
 #endif
     }
 
-    public float GetLife()
+    public  float   GetLife()
     {
         return (this.life);
     }
 
-    public string GetName()
+    public  string  GetName()
     {
         return (this.scriptableObject.name);
     }
 
-    public int GetPrice()
+    public  int     GetPrice()
     {
         return (this.scriptableObject.price);
     }
 
-    public void SetPosition(Vector3 vector)
+    public  void    SetPosition(Vector3 vector)
     {
 #if (UNITY_DEBUG_BRAIN_DETAILS)
         Debug.Log("move "+ this.GetName() + " Spirit at " + vector);
@@ -102,7 +102,7 @@ public class spirit_brain : MonoBehaviour
         this.gameObject.transform.position  = vector;
     }
 
-    public void SetDragAndDrop(bool status)
+    public  void    SetDragAndDrop(bool status)
     {
 #if (UNITY_DEBUG_BRAIN_DETAILS)
         Debug.Log("touch enable for" + this.GetName() + " is " + status);
@@ -110,17 +110,17 @@ public class spirit_brain : MonoBehaviour
         this.EnableTouch = status;
     }
 
-    public void AttachToParent(GameObject dady)
+    public  void    AttachToParent(GameObject dad)
     {
-        this.transform.parent = dady.transform;
+        this.transform.parent = dad.transform;
     }
 
-    public void DettachToParent(GameObject dady)
+    public  void    DettachToParent()
     {
         this.transform.parent = null;
     }
 
-    public bool SetFight(bool status)
+    public  bool    SetFight(bool status)
     {
             this.Fnavigate = status;
 
@@ -137,7 +137,7 @@ public class spirit_brain : MonoBehaviour
             return (true);
     }
     
-    public bool SetTarget(Transform newTarget)
+    public  bool    SetTarget(Transform newTarget)
     {
             // check if we can navigate or not before set target
         if (this.Fnavigate)
@@ -152,17 +152,17 @@ public class spirit_brain : MonoBehaviour
         }
     }
 
-    public void SetIndexFight(int index)
+    public  void    SetIndexFight(int index)
     {
         this.fightIndex = index;
     }
 
-    public int GetIndexFight()
+    public  int     GetIndexFight()
     {
         return (this.fightIndex);
     }
 
-    private bool IsMoving()
+    private bool    IsMoving()
     {
         bool status = false;
 
@@ -180,7 +180,7 @@ public class spirit_brain : MonoBehaviour
         return (status);
     }
 
-    private void goToTarget()
+    private void    goToTarget()
     {
         this.GetComponent<NavMeshAgent>().SetDestination(Target.position);
     }
@@ -377,7 +377,7 @@ public class spirit_brain : MonoBehaviour
 
     // use mouse
 #if (UNITY_MOUSE_MODE)
-    private void DragAndDrop()
+    private void    DragAndDrop()
     {
         this.ray = Camera.main.ScreenPointToRay(Input.mousePosition);
         int layerMask = 1 << 9;
@@ -410,6 +410,7 @@ public class spirit_brain : MonoBehaviour
                         this.SetPosition(this.hit.transform.gameObject.transform.position);
                         this.origin_position = this.transform.position;
 
+                        // drop to fight map
                         if (string.Compare(this.hit.transform.gameObject.transform.parent.parent.name,
                                         GlobalVar.FightMap) == 0)
                         {
@@ -419,7 +420,7 @@ public class spirit_brain : MonoBehaviour
                                     this.gameObject, this.transform.gameObject.transform.parent.parent.name);
                             }
                         }
-                        else
+                        else // drop to main map
                         {
                             if (this.fightIndex != -1)
                             {
@@ -460,7 +461,7 @@ public class spirit_brain : MonoBehaviour
 
     // use finger
 #if (UNITY_FINGER_MODE)
-    private void DragAndDrop()
+    private void    DragAndDrop()
     {
         int layerMask = 1 << 9;
         layerMask = ~layerMask;
@@ -547,16 +548,19 @@ public class spirit_brain : MonoBehaviour
 #endif
 
     // Update is called once per frame
-    void Update()
+    void    Update()
     {
+        // if i can be touched
         if (this.EnableTouch)
         {
 #if (UNITY_FINGER_MODE || UNITY_MOUSE_MODE)
             DragAndDrop();
 #endif
         }
+        // else if i can move on the map
         else if (this.Fnavigate)
         {
+            // check if i finished to join the target
             if ((this.Target != null)  && (this.IsMoving() == true))
             {
                 goToTarget();

@@ -6,13 +6,14 @@ using UnityEngine;
 public class Spirit : ScriptableObject
 {
     public new string   name;
-    public float        life    = 200;
-    public float        power   = 40;
+    public float        life     = 200;
+    public float        power    = 20;
+    public float        BigPower = 15;
 
     public Family       family;
     public Classe       classe;
 
     public GameObject   skin;
 
-    public int          price = 3;
+    public int          price    = 3;
 }

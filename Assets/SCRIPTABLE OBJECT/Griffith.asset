@@ -14,7 +14,9 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   name: Griffith
   life: 400
+  power: 38
+  BigPower: 7
   family: 0
   classe: 1
-  team: 1
   skin: {fileID: 6012213059471276784, guid: 37fccecf8bd258145a694bbf76ae484f, type: 3}
+  price: 5

@@ -6,7 +6,7 @@ public class main_manager : SpiritList
 {
     //private static bool        status      = false;
     private Vector3     MainPos;
-    //private static float  step        = 1.52f;
+    private int         money       = 4;
 
     public GameObject   MapMain;
 
@@ -25,7 +25,7 @@ public class main_manager : SpiritList
 
     public bool AddToMain(ref GameObject spirit)
     {
-        if ((this.GetListSize() >= 0) && (this.GetListSize() < GlobalVar.MaxSpiritMain))
+        if (this.GetListSize() < GlobalVar.MaxSpiritMain)
         {
             if (this.AddListObject(ref spirit))
             {
@@ -51,4 +51,15 @@ public class main_manager : SpiritList
         return (false);
     }
 
+
+
+    public int GetMoney()
+    {
+        return (this.money);
+    }
+
+    public void SetMoney(int val)
+    {
+        this.money = val;
+    }
 }

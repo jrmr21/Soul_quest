@@ -42,6 +42,7 @@ public class Fight_manager : SpiritList
     {
         Debug.Log("rm player ");
 
+        // remove character in player front
         if (string.Compare(team, GlobalVar.player_front) == 0)
         {
                 // update all value index before remove character
@@ -54,6 +55,7 @@ public class Fight_manager : SpiritList
 
             this.RemoveListObject(index);
         }
+        // remove character in player back
         else if (string.Compare(team, GlobalVar.player_back) == 0)
         {
             // update all value index before remove character
@@ -72,27 +74,32 @@ public class Fight_manager : SpiritList
 
     public void StartFightMode()
     {
-        for (int i = 0; i < this.GetListSize() ; i++)
+        // if the whole team has at least 1 player
+        if ((this.GetListSize() > 0) & (this.GetListSize(1) > 0))
         {
-            this.PeekListObject(i).GetComponent<spirit_brain>().SetFight(true);
+            for (int i = 0; i < this.GetListSize(); i++)
+            {
+                this.PeekListObject(i).GetComponent<spirit_brain>().SetFight(true);
 
                 // select random cible in ennemy tab
-            int tmpCible = Random.Range(0, (this.GetListSize(1) - 1));
+                int tmpCible = Random.Range(0, (this.GetListSize(1) - 1));
 
-            this.PeekListObject(i).GetComponent<spirit_brain>().
-                SetTarget(this.PeekListObject(tmpCible, 1).GetComponent<spirit_brain>().transform);
+                this.PeekListObject(i).GetComponent<spirit_brain>().
+                    SetTarget(this.PeekListObject(tmpCible, 1).GetComponent<spirit_brain>().transform);
+            }
+
+            for (int i = 0; i < this.GetListSize(1); i++)
+            {
+                this.PeekListObject(i, 1).GetComponent<spirit_brain>().SetFight(true);
+
+                // select random cible in ennemy tab
+                int tmpCible = Random.Range(0, (this.GetListSize() - 1));
+
+                this.PeekListObject(i, 1).GetComponent<spirit_brain>().
+                    SetTarget(this.PeekListObject(tmpCible).GetComponent<spirit_brain>().transform);
+            }
         }
-
-        for (int i = 0; i < this.GetListSize(1); i++)
-        {
-            this.PeekListObject(i, 1).GetComponent<spirit_brain>().SetFight(true);
-
-            // select random cible in ennemy tab
-            int tmpCible = Random.Range(0, (this.GetListSize() - 1));
-
-            this.PeekListObject(i, 1).GetComponent<spirit_brain>().
-                SetTarget(this.PeekListObject(tmpCible).GetComponent<spirit_brain>().transform);
-        }
+        
     }
 
     public void EndFightMode()

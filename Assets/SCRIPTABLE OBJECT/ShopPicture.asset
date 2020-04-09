@@ -1,0 +1,24 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 9d9de50af14a0074e8007d1e2b816763, type: 3}
+  m_Name: ShopPicture
+  m_EditorClassIdentifier: 
+  ListName:
+  - Casca
+  - Griffith
+  - Guts
+  - Judeau
+  ListPicture:
+  - {fileID: 21300000, guid: 2c7697ca9ce3a554ab2a6af1fa144b63, type: 3}
+  - {fileID: 21300000, guid: 164d97c1c03be3143accf126ae923150, type: 3}
+  - {fileID: 21300000, guid: 1f853fe4a5cc01d4aa85aa245487f144, type: 3}
+  - {fileID: 21300000, guid: c2f28f88ba019aa488880f97c395aee8, type: 3}
