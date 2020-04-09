@@ -25,8 +25,15 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   name: Judeau
   life: 200
+  power: 20
+  BigPower: 15
   family: 3
   classe: 2
+<<<<<<< HEAD
   team: 0
   skin: {fileID: -927199367670048503, guid: d3b12138d8b543742870bd7eae58c552, type: 3}
 >>>>>>> 7336172901d9ced1d32c7674bd0323cff9467f38:Assets/SCRIPTABLE OBJECT/Judeau.asset
+=======
+  skin: {fileID: 7764814435339612709, guid: 5b454d444b6e91d45bcbab264b253653, type: 3}
+  price: 3
+>>>>>>> 0e0c58e4572ea7cfa67e258db43905a2f898a6aa

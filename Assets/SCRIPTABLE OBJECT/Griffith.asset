@@ -25,8 +25,15 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   name: Griffith
   life: 400
+  power: 38
+  BigPower: 7
   family: 0
   classe: 1
+<<<<<<< HEAD
   team: 1
   skin: {fileID: -927199367670048503, guid: d3b12138d8b543742870bd7eae58c552, type: 3}
 >>>>>>> 7336172901d9ced1d32c7674bd0323cff9467f38:Assets/SCRIPTABLE OBJECT/Griffith.asset
+=======
+  skin: {fileID: 6012213059471276784, guid: 37fccecf8bd258145a694bbf76ae484f, type: 3}
+  price: 5
+>>>>>>> 0e0c58e4572ea7cfa67e258db43905a2f898a6aa

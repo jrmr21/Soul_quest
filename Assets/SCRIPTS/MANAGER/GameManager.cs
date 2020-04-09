@@ -1,27 +1,37 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
 
 public class GameManager : MonoBehaviour
 {
     private bool        GameIsReady = true;
     private bool        flag        = true;
+   
 
-    private RaycastHit hit;
-    private Ray ray;
-    private Collider coll;
-
-    // manager declaration
-    public  GameObject  M_map;
-    public  GameObject  Player_main;
-    public  GameObject  IA_main;
-
-    // main map
-    public GameObject   MapMain1;
-    public GameObject   MapMain2;
+    // tools time (display, count, GameObject Text, flag to change gameMode)
+    private string  current_time    = "00";
+    private double  start_time;
+    private Text    text_cpt;
+    private int     flag_mode       = 0;
 
 
-    // Start is called before the first frame update
+    // timeout mode
+    public int fight_time       = 0;
+    public int prepare_time     = 0;
+
+
+    // two players gameObject with all compomnent ( main map, fight map, main manager)
+    public  GameObject  Player_back     = null;
+    public  GameObject  Player_front    = null;
+
+        // all UI
+    public GameObject Canevas;
+
+    // button to enable shop
+    public Button ShopButton;
+
+
     /*
      a 	b   R  (a & b)
     0 	0 	0
@@ -33,11 +43,30 @@ public class GameManager : MonoBehaviour
     {
         Screen.SetResolution(1280, 720, true);
 
-        this.GameIsReady    &= M_map.GetComponent<map_manager>().init_MapManager();
-        this.GameIsReady    &= this.GetComponent<Shop_manager>().init_ShopManager();
+        this.start_time     = Time.time;
 
-        this.GameIsReady    &= this.Player_main.GetComponent <main_manager>().init_MainManager(ref this.MapMain1);
-        this.GameIsReady    &= this.IA_main.GetComponent<main_manager>().init_MainManager(ref this.MapMain2);
+            // set count displayer
+        this.text_cpt = this.Canevas.gameObject.transform.GetChild(2).GetComponentInChildren<Text>();
+        this.text_cpt.text = current_time;
+
+
+            // init all managers
+        this.GameIsReady    &= this.GetComponent<Shop_manager>().init_ShopManager(this.Canevas.gameObject.transform.GetChild(3).gameObject);
+        this.GameIsReady    &= this.GetComponent<Touch_manager>().init_TouchManager();
+        this.GameIsReady    &= this.GetComponent<Fight_manager>().init_FightManager();
+
+
+        // set listener button 
+        this.ShopButton.onClick.AddListener(enableShop);
+
+
+        // init "main_map" in main manager
+        this.GameIsReady    &= this.Player_back.transform.GetChild(0).GetComponent <main_manager>().init_MainManager(
+            this.Player_back.transform.GetChild(0).GetChild(0).gameObject);
+
+        this.GameIsReady    &= this.Player_front.transform.GetChild(0).GetComponent <main_manager>().init_MainManager(
+            this.Player_front.transform.GetChild(0).GetChild(0).gameObject);
+
 
 #if (UNITY_DEBUG_MANAGER)
         if (this.GameIsReady)
@@ -50,81 +79,14 @@ public class GameManager : MonoBehaviour
         }
 #endif
     }
+    
 
-
-    private GameObject character;
-
-    // use mouse
-#if (UNITY_MOUSE_MODE)
-    private void DragAndDrop()
+    private void enableShop()
     {
-        this.ray = Camera.main.ScreenPointToRay(Input.mousePosition);
-        int layerMask = 1 << 9;
-        layerMask = ~layerMask;
-
-        if (Input.GetMouseButtonDown(0))
-        {
-            if (Physics.Raycast(ray, out hit, 100, layerMask))
-            {
-                try
-                {
-                    //Debug.Log("cible1 " + this.hit.transform.parent.name);
-                    character = this.hit.transform.parent.gameObject ;
-                    character.GetComponent<spirit_brain>().SetDragAndDrop(true);
-                }
-                catch
-                {
-                    character = null;
-                }
-            }
-        }
-        else if(Input.GetMouseButtonUp(0))
-        {
-            //character.GetComponent<spirit_brain>().SetDragAndDrop(false);
-            character = null;
-        }
+            // send player in shop
+        this.GetComponent<Shop_manager>().enableShop(
+            this.Player_back.transform.GetChild(0).GetComponent<main_manager>());
     }
-#endif
-
-    // use finger
-#if (UNITY_FINGER_MODE)
-    private void DragAndDrop()
-    {
-        int layerMask = 1 << 9;
-        layerMask = ~layerMask;
-
-        if (Input.touchCount > 0)
-        {
-            this.ray = Camera.main.ScreenPointToRay(Input.GetTouch(0).position);
-            if (Input.touchCount == 1)
-            {
-                if (Input.GetTouch(0).phase == TouchPhase.Began)
-                {
-                    if (Physics.Raycast(ray, out hit, 100, layerMask))
-                    {
-                        Debug.Log("cible1 " + this.hit.transform.name);
-                        try
-                        {
-                            Debug.Log("cible1 " + this.hit.transform.name);
-                            character = this.hit.transform.gameObject;
-                            character.GetComponent<spirit_brain>().SetDragAndDrop(true);
-                        }
-                        catch
-                        {
-                            Debug.Log("ciff");
-                            character = null;
-                        }
-                    }
-                }
-                else if (Input.GetTouch(0).phase == TouchPhase.Ended || Input.GetTouch(0).phase == TouchPhase.Canceled)
-                {
-                    //character.GetComponent<spirit_brain>().SetDragAndDrop(false);
-                    character = null;
-                }
-            }
-        }
-    }
-#endif
 
     // Update is called once per frame
     void Update()
@@ -135,22 +97,79 @@ public class GameManager : MonoBehaviour
             {
                 GameObject t;
 
-                for (int i = 0; i < GlobalVar.MaxSpiritMain; i++)
-                {
+                        // you
                     t = this.GetComponent<Shop_manager>().GetRandomSpirit();
-                    this.Player_main.GetComponent<main_manager>().AddToMain(ref t);
+                    this.Player_back.transform.GetChild(0).GetComponent<main_manager>().AddToMain(ref t);
 
+                        // AI
                     t = this.GetComponent<Shop_manager>().GetRandomSpirit();
                     t.GetComponent<spirit_brain>().SetDragAndDrop(false);
-                    this.IA_main.GetComponent<main_manager>().AddToMain(ref t);
-                }
+                    this.Player_front.transform.GetChild(0).GetComponent<main_manager>().AddToMain(ref t);
 
                 flag =! flag;
             }
 
-#if (UNITY_FINGER_MODE || UNITY_MOUSE_MODE)
-            DragAndDrop();
-#endif
+
+                // Prepare Mode
+            if (this.flag_mode == 0)
+            {
+                //  go to start Fight mode
+                if (((int)(Time.time - start_time)) > this.prepare_time)
+                {
+                        // disable all touch activity
+                    this.GetComponent<Touch_manager>().set_EnableTouch(false);
+
+                    // disable shop (default command)
+                    this.GetComponent<Shop_manager>().disableShop();
+
+                        // swap UI Fight mode and Prepare mode
+                    this.Canevas.gameObject.transform.GetChild(0).gameObject.SetActive(true);
+                    this.Canevas.gameObject.transform.GetChild(1).gameObject.SetActive(false);
+
+                    this.GetComponent<Fight_manager>().StartFightMode();
+
+                    flag_mode   = 1;              //  go to fight mode
+                    start_time  = Time.time;
+                }
+                else
+                {
+                    current_time = (this.prepare_time - ((int)(Time.time - start_time))).ToString();
+                }
+            }
+                // Fight Mode
+            else if(this.flag_mode == 1)
+            {
+                    //  go to start Prepare mode
+                if (((int)(Time.time - start_time)) > this.fight_time)
+                {
+                    this.GetComponent<Touch_manager>().set_EnableTouch(true);
+
+                    this.Canevas.gameObject.transform.GetChild(0).gameObject.SetActive(false);
+                    this.Canevas.gameObject.transform.GetChild(1).gameObject.SetActive(true);
+
+                    this.GetComponent<Fight_manager>().EndFightMode();
+
+                    flag_mode   = 0;              //  go to prepare mode
+                    start_time  = Time.time;
+
+                    // add money
+                    this.Player_back.transform.GetChild(0).GetComponent<main_manager>().SetMoney(
+                        this.Player_back.transform.GetChild(0).GetComponent<main_manager>().GetMoney() + 3);
+
+                    this.Player_front.transform.GetChild(0).GetComponent<main_manager>().SetMoney(
+                        this.Player_front.transform.GetChild(0).GetComponent<main_manager>().GetMoney() + 3);
+                }
+                else
+                {
+                    current_time = (this.fight_time - ((int)(Time.time - start_time))).ToString();
+                }
+            }
+            else
+            {
+                // future template
+            }
+
+            this.text_cpt.text = current_time;
         }
     }
 }

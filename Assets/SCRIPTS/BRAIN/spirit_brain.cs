@@ -1,81 +1,100 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.AI;
 
 public class spirit_brain : MonoBehaviour
 {
-    private GameObject Master;
-    private Spirit scriptableObject;
+        // brain tools
+    private GameObject          Master;
+    private Spirit              scriptableObject;
+    private int                 fightIndex = -1;
 
+    private Animator            anim;
+
+        // character tools
     private ProgressBarCircle   Pb;
-    private string              m_name;
     private float               life;
-    private Team                team;
     private GameObject          skin;
     private Vector3             origin_position;
 
-    private bool EnableTouch    = false;
-    private bool touchAct       = false;
-    private Collider coll;
-    private RaycastHit hit;
-    private Ray ray;
+    // navigation tools
+    private Transform       Target      = null;
+    private NavMeshAgent    agent;
+    private bool            Fnavigate   = false;
+    private Vector3         UpdatePos;
+
+    // touch tools
+    private bool        EnableTouch    = false;     // flag permission tou touch character
+    private bool        touchAct       = false;     // flag to know if you are touched or not
+    private Collider    coll;
+    private RaycastHit  hit;
+    private Ray         ray;
 
 
-    public bool InitPrefab(GameObject Master, ref Spirit data)
+    public  bool    InitPrefab(GameObject Master, ref Spirit data)
     {
         // get tools
         this.Master             = Master;
         this.scriptableObject   = data;
 
+        this.GetComponent<NavMeshAgent>().Warp(this.transform.position);
+        agent = GetComponent<NavMeshAgent>();
+        agent.stoppingDistance = 2f;
+
+        Target = null;
+
         // change name
         this.transform.name     = this.scriptableObject.name;
 
         // set data
-        this.m_name     = this.scriptableObject.name;
         this.life       = this.scriptableObject.life;
-        this.team       = this.scriptableObject.team;
 
         coll = this.GetComponentInChildren<Collider>();
 
         // create skin
         this.skin = Instantiate(this.scriptableObject.skin);
-        this.skin.transform.parent = this.gameObject.transform;
+        this.skin.transform.parent  = this.gameObject.transform;
 
         // move skin at 0, 0, 0
         this.SetPosition(this.transform.position);
-        this.origin_position         = this.transform.position;
+        this.origin_position        = this.transform.position;
+
+        anim = this.transform.GetChild(1).GetComponent<Animator>();
+
+        //Debug.Log("anim " + this.transform.GetChild(1).name + " " + anim);
 
 
-        //Debug.Log("pos " + this.skin.transform.position);
+        if (null != anim)
+        {
+            // play Bounce but start at a quarter of the way though
+            //anim.Play("idle");
+        }
 
-<<<<<<< HEAD
 
-=======
 #if (UNITY_FINGER_MODE || UNITY_MOUSE_MODE)
->>>>>>> 7336172901d9ced1d32c7674bd0323cff9467f38
         return (true);
 #else
         return (false);
 #endif
     }
 
-    public float GetLife()
+    public  float   GetLife()
     {
         return (this.life);
     }
 
-    public string GetName()
+    public  string  GetName()
     {
-        return (this.m_name);
+        return (this.scriptableObject.name);
     }
 
-    public Team GetTeam()
+    public  int     GetPrice()
     {
-        return (this.team);
+        return (this.scriptableObject.price);
     }
 
-  
-    public void SetPosition(Vector3 vector)
+    public  void    SetPosition(Vector3 vector)
     {
 #if (UNITY_DEBUG_BRAIN_DETAILS)
         Debug.Log("move "+ this.GetName() + " Spirit at " + vector);
@@ -83,7 +102,7 @@ public class spirit_brain : MonoBehaviour
         this.gameObject.transform.position  = vector;
     }
 
-    public void SetDragAndDrop(bool status)
+    public  void    SetDragAndDrop(bool status)
     {
 #if (UNITY_DEBUG_BRAIN_DETAILS)
         Debug.Log("touch enable for" + this.GetName() + " is " + status);
@@ -91,40 +110,102 @@ public class spirit_brain : MonoBehaviour
         this.EnableTouch = status;
     }
 
-<<<<<<< HEAD
-    //     mouse version
-=======
+    public  void    AttachToParent(GameObject dad)
+    {
+        this.transform.parent = dad.transform;
+    }
 
-    //     mouse version example by Julien the BEST
+    public  void    DettachToParent()
+    {
+        this.transform.parent = null;
+    }
+
+    public  bool    SetFight(bool status)
+    {
+            this.Fnavigate = status;
+
+            if (status == false)
+            {
+                this.agent.enabled = false;
+                this.SetPosition(this.origin_position);
+            }
+            else
+            {
+                this.agent.enabled = true;
+            }
+
+            return (true);
+    }
+    
+    public  bool    SetTarget(Transform newTarget)
+    {
+            // check if we can navigate or not before set target
+        if (this.Fnavigate)
+        {
+            this.Target = newTarget;
+            return (true);
+        }
+        else
+        {
+            this.Target = null;
+            return (false);
+        }
+    }
+
+    public  void    SetIndexFight(int index)
+    {
+        this.fightIndex = index;
+    }
+
+    public  int     GetIndexFight()
+    {
+        return (this.fightIndex);
+    }
+
+    private bool    IsMoving()
+    {
+        bool status = false;
+
+        if (this.transform.position == this.UpdatePos)
+        {
+            status = false;
+        }
+        else
+        {
+            status = true;
+        }
+
+        this.UpdatePos = this.transform.position;
+
+        return (status);
+    }
+
+    private void    goToTarget()
+    {
+        this.GetComponent<NavMeshAgent>().SetDestination(Target.position);
+    }
+
+
+    //     mouse version example by Julien
     /*
->>>>>>> 7336172901d9ced1d32c7674bd0323cff9467f38
     private void DragAndDrop()
     {
         float decalageX = 1.475f;
         int Xinit = 1994;
         float Xcenter = 1994.7375f;
-
         float decalageZ = 1.425f;
         float Zinit = -5.8f;
         float Zcenter = -5.0875f;
-
-
         this.ray = Camera.main.ScreenPointToRay(Input.mousePosition);
         int layerMask = 1 << 9;
         layerMask = ~layerMask;
-
-
         if (Input.GetMouseButtonDown(0))
         {
             if (coll.Raycast(ray, out hit, 100.0f))
             {
                 touchAct = true;
             }
-<<<<<<< HEAD
-            Debug.Log(hit.transform.tag);
-=======
             //Debug.Log(hit.transform.tag);
->>>>>>> 7336172901d9ced1d32c7674bd0323cff9467f38
         }
         else if (Input.GetMouseButtonUp(0))
         {
@@ -157,8 +238,6 @@ public class spirit_brain : MonoBehaviour
                 {
                     transform.position = new Vector3(Xcenter, this.hit.point.y, Zcenter + (decalageZ * 3));
                 }
-
-
                 if (this.hit.point.x > Xinit + (decalageX) && this.hit.point.x < Xinit + (decalageX * 2) && this.hit.point.z > Zinit && this.hit.point.z < Zinit + (decalageZ))
                 {
                     transform.position = new Vector3(Xcenter + (decalageX), this.hit.point.y, Zcenter);
@@ -175,14 +254,11 @@ public class spirit_brain : MonoBehaviour
                 {
                     transform.position = new Vector3(Xcenter + (decalageX), this.hit.point.y, Zcenter + (decalageZ * 3));
                 }
-
-
                 if (this.hit.point.x > Xinit + (decalageX * 2) && this.hit.point.x < Xinit + (decalageX * 3) && this.hit.point.z > Zinit && this.hit.point.z < Zinit + (decalageZ))
                 {
                     transform.position = new Vector3(Xcenter + (decalageX * 2), this.hit.point.y, Zcenter);
                 }
                 if (this.hit.point.x > Xinit + (decalageX * 2) && this.hit.point.x < Xinit + (decalageX * 3) && this.hit.point.z > Zinit + (decalageZ) && this.hit.point.z < Zinit + (decalageZ * 2))
-<<<<<<< HEAD
                 {
                     transform.position = new Vector3(Xcenter + (decalageX * 2), this.hit.point.y, Zcenter + (decalageZ));
                 }
@@ -194,8 +270,6 @@ public class spirit_brain : MonoBehaviour
                 {
                     transform.position = new Vector3(Xcenter + (decalageX * 2), this.hit.point.y, Zcenter + (decalageZ * 3));
                 }
-
-
                 if (this.hit.point.x > Xinit + (decalageX * 3) && this.hit.point.x < Xinit + (decalageX * 4) && this.hit.point.z > Zinit && this.hit.point.z < Zinit + (decalageZ))
                 {
                     transform.position = new Vector3(Xcenter + (decalageX * 3), this.hit.point.y, Zcenter);
@@ -212,8 +286,6 @@ public class spirit_brain : MonoBehaviour
                 {
                     transform.position = new Vector3(Xcenter + (decalageX * 3), this.hit.point.y, Zcenter + (decalageZ * 3));
                 }
-
-
                 if (this.hit.point.x > Xinit + (decalageX * 4) && this.hit.point.x < Xinit + (decalageX * 5) && this.hit.point.z > Zinit && this.hit.point.z < Zinit + (decalageZ))
                 {
                     transform.position = new Vector3(Xcenter + (decalageX * 4), this.hit.point.y, Zcenter);
@@ -228,57 +300,8 @@ public class spirit_brain : MonoBehaviour
                 }
                 if (this.hit.point.x > Xinit + (decalageX * 4) && this.hit.point.x < Xinit + (decalageX * 5) && this.hit.point.z > Zinit + (decalageZ * 3) && this.hit.point.z < Zinit + (decalageZ * 4))
                 {
-=======
-                {
-                    transform.position = new Vector3(Xcenter + (decalageX * 2), this.hit.point.y, Zcenter + (decalageZ));
-                }
-                if (this.hit.point.x > Xinit + (decalageX * 2) && this.hit.point.x < Xinit + (decalageX * 3) && this.hit.point.z > Zinit + (decalageZ * 2) && this.hit.point.z < Zinit + (decalageZ * 3))
-                {
-                    transform.position = new Vector3(Xcenter + (decalageX * 2), this.hit.point.y, Zcenter + (decalageZ * 2));
-                }
-                if (this.hit.point.x > Xinit + (decalageX * 2) && this.hit.point.x < Xinit + (decalageX * 3) && this.hit.point.z > Zinit + (decalageZ * 3) && this.hit.point.z < Zinit + (decalageZ * 4))
-                {
-                    transform.position = new Vector3(Xcenter + (decalageX * 2), this.hit.point.y, Zcenter + (decalageZ * 3));
-                }
-
-
-                if (this.hit.point.x > Xinit + (decalageX * 3) && this.hit.point.x < Xinit + (decalageX * 4) && this.hit.point.z > Zinit && this.hit.point.z < Zinit + (decalageZ))
-                {
-                    transform.position = new Vector3(Xcenter + (decalageX * 3), this.hit.point.y, Zcenter);
-                }
-                if (this.hit.point.x > Xinit + (decalageX * 3) && this.hit.point.x < Xinit + (decalageX * 4) && this.hit.point.z > Zinit + (decalageZ) && this.hit.point.z < Zinit + (decalageZ * 2))
-                {
-                    transform.position = new Vector3(Xcenter + (decalageX * 3), this.hit.point.y, Zcenter + (decalageZ));
-                }
-                if (this.hit.point.x > Xinit + (decalageX * 3) && this.hit.point.x < Xinit + (decalageX * 4) && this.hit.point.z > Zinit + (decalageZ * 2) && this.hit.point.z < Zinit + (decalageZ * 3))
-                {
-                    transform.position = new Vector3(Xcenter + (decalageX * 3), this.hit.point.y, Zcenter + (decalageZ * 2));
-                }
-                if (this.hit.point.x > Xinit + (decalageX * 3) && this.hit.point.x < Xinit + (decalageX * 4) && this.hit.point.z > Zinit + (decalageZ * 3) && this.hit.point.z < Zinit + (decalageZ * 4))
-                {
-                    transform.position = new Vector3(Xcenter + (decalageX * 3), this.hit.point.y, Zcenter + (decalageZ * 3));
-                }
-
-
-                if (this.hit.point.x > Xinit + (decalageX * 4) && this.hit.point.x < Xinit + (decalageX * 5) && this.hit.point.z > Zinit && this.hit.point.z < Zinit + (decalageZ))
-                {
-                    transform.position = new Vector3(Xcenter + (decalageX * 4), this.hit.point.y, Zcenter);
-                }
-                if (this.hit.point.x > Xinit + (decalageX * 4) && this.hit.point.x < Xinit + (decalageX * 5) && this.hit.point.z > Zinit + (decalageZ) && this.hit.point.z < Zinit + (decalageZ * 2))
-                {
-                    transform.position = new Vector3(Xcenter + (decalageX * 4), this.hit.point.y, Zcenter + (decalageZ));
-                }
-                if (this.hit.point.x > Xinit + (decalageX * 4) && this.hit.point.x < Xinit + (decalageX * 5) && this.hit.point.z > Zinit + (decalageZ * 2) && this.hit.point.z < Zinit + (decalageZ * 3))
-                {
-                    transform.position = new Vector3(Xcenter + (decalageX * 4), this.hit.point.y, Zcenter + (decalageZ * 2));
-                }
-                if (this.hit.point.x > Xinit + (decalageX * 4) && this.hit.point.x < Xinit + (decalageX * 5) && this.hit.point.z > Zinit + (decalageZ * 3) && this.hit.point.z < Zinit + (decalageZ * 4))
-                {
->>>>>>> 7336172901d9ced1d32c7674bd0323cff9467f38
                     transform.position = new Vector3(Xcenter + (decalageX * 4), this.hit.point.y, Zcenter + (decalageZ * 3));
                 }
-
-
                 if (this.hit.point.x > Xinit + (decalageX * 5) && this.hit.point.x < Xinit + (decalageX * 6) && this.hit.point.z > Zinit && this.hit.point.z < Zinit + (decalageZ))
                 {
                     transform.position = new Vector3(Xcenter + (decalageX * 5), this.hit.point.y, Zcenter);
@@ -295,8 +318,6 @@ public class spirit_brain : MonoBehaviour
                 {
                     transform.position = new Vector3(Xcenter + (decalageX * 5), this.hit.point.y, Zcenter + (decalageZ * 3));
                 }
-
-
                 if (this.hit.point.x > Xinit + (decalageX * 6) && this.hit.point.x < Xinit + (decalageX * 7) && this.hit.point.z > Zinit && this.hit.point.z < Zinit + (decalageZ))
                 {
                     transform.position = new Vector3(Xcenter + (decalageX * 6), this.hit.point.y, Zcenter);
@@ -313,8 +334,6 @@ public class spirit_brain : MonoBehaviour
                 {
                     transform.position = new Vector3(Xcenter + (decalageX * 6), this.hit.point.y, Zcenter + (decalageZ * 3));
                 }
-
-
                 if (this.hit.point.x > Xinit + (decalageX * 7) && this.hit.point.x < Xinit + (decalageX * 8) && this.hit.point.z > Zinit && this.hit.point.z < Zinit + (decalageZ))
                 {
                     transform.position = new Vector3(Xcenter + (decalageX * 7), this.hit.point.y, Zcenter);
@@ -334,16 +353,12 @@ public class spirit_brain : MonoBehaviour
             }
         }
     }
-<<<<<<< HEAD
-
-    /*
-=======
     */
 
 
     // use mouse
 #if (UNITY_MOUSE_MODE)
-    private void DragAndDrop()
+    private void    DragAndDrop()
     {
         this.ray = Camera.main.ScreenPointToRay(Input.mousePosition);
         int layerMask = 1 << 9;
@@ -366,12 +381,34 @@ public class spirit_brain : MonoBehaviour
             {
                 try
                 {
-                    if (string.Compare(this.hit.transform.gameObject.transform.parent.parent.name,"fight_main") == 0)
+                    // check if we are in same family
+                    if (string.Compare(this.hit.transform.gameObject.transform.parent.parent.parent.name,
+                                        this.transform.gameObject.transform.parent.parent.name) == 0)
                     {
 #if (UNITY_DEBUG_BRAIN_DETAILS)
                         Debug.Log("succes position !");
 #endif
                         this.SetPosition(this.hit.transform.gameObject.transform.position);
+                        this.origin_position = this.transform.position;
+
+                        // drop to fight map
+                        if (string.Compare(this.hit.transform.gameObject.transform.parent.parent.name,
+                                        GlobalVar.FightMap) == 0)
+                        {
+                            if (this.fightIndex == -1)
+                            {
+                                this.fightIndex = Master.GetComponent<Fight_manager>().addToFightTab(
+                                    this.gameObject, this.transform.gameObject.transform.parent.parent.name);
+                            }
+                        }
+                        else // drop to main map
+                        {
+                            if (this.fightIndex != -1)
+                            {
+                                Master.GetComponent<Fight_manager>().removeToFightTab(this.fightIndex,
+                                    this.transform.gameObject.transform.parent.parent.name);
+                            }
+                        }
                     }
                     else
                     {
@@ -405,8 +442,7 @@ public class spirit_brain : MonoBehaviour
 
     // use finger
 #if (UNITY_FINGER_MODE)
->>>>>>> 7336172901d9ced1d32c7674bd0323cff9467f38
-    private void DragAndDrop()
+    private void    DragAndDrop()
     {
         int layerMask = 1 << 9;
         layerMask = ~layerMask;
@@ -432,12 +468,33 @@ public class spirit_brain : MonoBehaviour
                     {
                         try
                         {
-                            if (string.Compare(this.hit.transform.gameObject.transform.parent.parent.name,"fight_main") == 0)
+                                // check if we are in same family
+                            if (string.Compare(this.hit.transform.gameObject.transform.parent.parent.parent.name,
+                                        this.transform.gameObject.transform.parent.parent.name) == 0)
                             {
 #if (UNITY_DEBUG_BRAIN_DETAILS)
-                                Debug.Log("succes position ! " + this.hit.transform.gameObject.transform.name);
+                                Debug.Log("succes position !");
 #endif
                                 this.SetPosition(this.hit.transform.gameObject.transform.position);
+                                this.origin_position = this.transform.position;
+
+                                if (string.Compare(this.hit.transform.gameObject.transform.parent.parent.name,
+                                        GlobalVar.FightMap) == 0)
+                                {
+                                    if (this.fightIndex == -1)
+                                    {
+                                        this.fightIndex = Master.GetComponent<Fight_manager>().addToFightTab(
+                                            this.gameObject, this.transform.gameObject.transform.parent.parent.name);
+                                    }
+                                }
+                                else
+                                {
+                                    if (this.fightIndex != -1)
+                                    {
+                                        Master.GetComponent<Fight_manager>().removeToFightTab(this.fightIndex,
+                                            this.transform.gameObject.transform.parent.parent.name);
+                                    }
+                                }
                             }
                             else
                             {
@@ -469,21 +526,30 @@ public class spirit_brain : MonoBehaviour
             }
         }
     }
-<<<<<<< HEAD
-    */
-=======
 #endif
 
->>>>>>> 7336172901d9ced1d32c7674bd0323cff9467f38
     // Update is called once per frame
-    void Update()
+    void    Update()
     {
+        // if i can be touched
         if (this.EnableTouch)
         {
 #if (UNITY_FINGER_MODE || UNITY_MOUSE_MODE)
             DragAndDrop();
-            Debug.Log("I'm touch enable " + this.GetName());
 #endif
+        }
+        // else if i can move on the map
+        else if (this.Fnavigate)
+        {
+            // check if i finished to join the target
+            if ((this.Target != null)  && (this.IsMoving() == true))
+            {
+                goToTarget();
+            }
+            else
+            {
+
+            }
         }
     }
 }

@@ -15,17 +15,19 @@ public enum Classe
     archer, warrior, magician
 }
 
-public enum Team
-{
-    TeamA, TeamB
-}
-
 public class GlobalVar
 {
     public const int SizeOfTeam         = 2;
     public const int MaxSpiritOnBoard   = 10;
     public const int MaxSpiritMain      = 7;
 
+    public const int MaxShopCharacter   = 5;
+
+    public const string player_front    = "player_front";
+    public const string player_back     = "player_back";
+
+    public const string MainMap         = "PlayerMain";
+    public const string FightMap        = "fight_main";
 
     // you need 3 spirit per character (3 x all types of character)
     public const int SizeOfFusion   = 9;

@@ -4,14 +4,20 @@ using UnityEngine;
 
 public class SpiritList : MonoBehaviour
 {
-    protected List<GameObject>  ListObject;
+        // we can use 5 list maximum !
+    protected List<GameObject>[] ListObject = new List<GameObject>[5];
 
-    protected void InitList()
+    int test = 0;
+
+    protected void          InitList(int size = 1)
     {
-        this.ListObject = new List<GameObject>();
+        for (int i = 0; i < size; i++)
+        {
+            this.ListObject[i] = new List<GameObject>();
+        }
     }
 
-    protected bool AddListObject(ref GameObject character)
+    protected bool          AddListObject(ref GameObject character, int list = 0)
     {
         if (character == null)
         {
@@ -19,12 +25,12 @@ public class SpiritList : MonoBehaviour
         }
         else
         {
-            this.ListObject.Add(character);
+            this.ListObject[list].Add(character);
         }
         return (true);
     }
 
-    protected GameObject PopRandomListObject()
+    protected GameObject    PopRandomListObject(int list = 0)
     {
         GameObject tempo;
 
@@ -38,44 +44,49 @@ public class SpiritList : MonoBehaviour
         else
         {
             // copy object like
-            tempo = this.ListObject[index];
+            tempo = this.ListObject[list][index];
 
             // remove this object to list
-            this.ListObject.RemoveAt(index);
+            this.ListObject[list].RemoveAt(index);
         }
 
             // return get object
         return (tempo);
     }
 
-    protected GameObject PopListObject(int index)
+    protected GameObject    PopListObject(int index, int list = 0)
     {
         GameObject tempo;
 
-        if ((index > this.GetListSize()) || (index < 0))
+        if (((index ) > this.GetListSize()) || (index < 0))
             return (null);
 
-            // copy object like
-        tempo = this.ListObject[index];
+        // copy object like
+        tempo = this.ListObject[list][index];
 
-            // remove this object to list
-        this.ListObject.RemoveAt(index);
+        // remove this object to list
+        this.ListObject[list].RemoveAt(index);
 
             // return get object
         return (tempo);
     }
 
-    protected GameObject PeekListObject(int index)
+    protected void          RemoveListObject(int index, int list = 0)
+    {
+        this.ListObject[list].RemoveAt(index);
+    }
+
+    protected GameObject    PeekListObject(int index, int list = 0)
     {
         if ((index > this.GetListSize()) || (index < 0))
             return (null);
  
         // return get object
-        return (this.ListObject[index]);
+        return (this.ListObject[list][index]);
     }
 
-    protected int GetListSize()
+    protected int           GetListSize(int list = 0)
     {
-        return (this.ListObject.Count);
+        return (this.ListObject[list].Count);
     }
 }

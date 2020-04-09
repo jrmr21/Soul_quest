@@ -6,11 +6,11 @@ public class main_manager : SpiritList
 {
     //private static bool        status      = false;
     private Vector3     MainPos;
-    //private static float  step        = 1.52f;
+    private int         money       = 4;
 
     public GameObject   MapMain;
 
-    public bool init_MainManager(ref GameObject map)
+    public bool init_MainManager(GameObject map)
     {
 #if (UNITY_DEBUG_MAIN_MANAGER)
         Debug.Log("init Main Manager");
@@ -25,15 +25,22 @@ public class main_manager : SpiritList
 
     public bool AddToMain(ref GameObject spirit)
     {
-        if ((this.GetListSize() >= 0) && (this.GetListSize() < GlobalVar.MaxSpiritMain))
+        if (this.GetListSize() < GlobalVar.MaxSpiritMain)
         {
             if (this.AddListObject(ref spirit))
             {
 #if (UNITY_DEBUG_MAIN_MANAGER_DETAILS)
                 Debug.Log("SUCCES to ADD " + spirit.name);
 #endif
-                this.ListObject[this.GetListSize() - 1].GetComponent<spirit_brain>().SetPosition(
+                this.ListObject[0][this.GetListSize() - 1].GetComponent<spirit_brain>().SetPosition(
                     this.MapMain.transform.GetChild(this.GetListSize() - 1).transform.position);
+
+                if (string.Compare(GlobalVar.player_front, this.transform.parent.name) == 0)
+                {
+                    this.ListObject[0][this.GetListSize() - 1].transform.Rotate(0, 180, 0);
+                }
+
+                this.ListObject[0][this.GetListSize() - 1].GetComponent<spirit_brain>().AttachToParent(this.gameObject);
 
                 return (true);
             }
@@ -44,4 +51,15 @@ public class main_manager : SpiritList
         return (false);
     }
 
+
+
+    public int GetMoney()
+    {
+        return (this.money);
+    }
+
+    public void SetMoney(int val)
+    {
+        this.money = val;
+    }
 }

@@ -14,7 +14,9 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   name: Casca
   life: 300
+  power: 30
+  BigPower: 20
   family: 1
   classe: 0
-  team: 0
-  skin: {fileID: -927199367670048503, guid: d3b12138d8b543742870bd7eae58c552, type: 3}
+  skin: {fileID: 6403324988916251771, guid: 8243c2c6ca424284ca8d134b371b0add, type: 3}
+  price: 4
