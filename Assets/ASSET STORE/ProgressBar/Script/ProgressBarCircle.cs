@@ -19,7 +19,6 @@ public class ProgressBarCircle : MonoBehaviour {
     [Range(1f, 100f)]
     public int Alert = 20;
     public Color BarAlertColor;
-
     [Header("Sound Alert")]
     public AudioClip sound;
     public bool repeat = false;
@@ -30,6 +29,8 @@ public class ProgressBarCircle : MonoBehaviour {
     private AudioSource audiosource;
     private Text txtTitle;
     private float barValue;
+
+
     public float BarValue
     {
         get { return barValue; }
@@ -91,7 +92,6 @@ public class ProgressBarCircle : MonoBehaviour {
 
     private void Update()
     {
-       
 
         if (!Application.isPlaying)
         {

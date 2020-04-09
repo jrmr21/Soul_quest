@@ -14,9 +14,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   name: Judeau
   life: 200
-  power: 20
-  BigPower: 15
   family: 3
   classe: 2
+  team: 0
   skin: {fileID: 7764814435339612709, guid: 5b454d444b6e91d45bcbab264b253653, type: 3}
-  price: 3

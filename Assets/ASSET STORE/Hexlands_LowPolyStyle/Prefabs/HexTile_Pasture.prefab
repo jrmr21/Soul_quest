@@ -44,7 +44,11 @@ GameObject:
   - component: {fileID: 33686269991746360}
   - component: {fileID: 23333496205084640}
   - component: {fileID: 95612789310703974}
+<<<<<<< HEAD:Assets/Hexlands_LowPolyStyle/Prefabs/HexTile_Pasture.prefab
+  - component: {fileID: 8416911077001731321}
+=======
   - component: {fileID: 3937985736556508003}
+>>>>>>> 7336172901d9ced1d32c7674bd0323cff9467f38:Assets/ASSET STORE/Hexlands_LowPolyStyle/Prefabs/HexTile_Pasture.prefab
   m_Layer: 0
   m_Name: HexTop_Pasture
   m_TagString: Untagged
@@ -131,7 +135,11 @@ Animator:
   m_HasTransformHierarchy: 1
   m_AllowConstantClipSamplingOptimization: 1
   m_KeepAnimatorControllerStateOnDisable: 0
+<<<<<<< HEAD:Assets/Hexlands_LowPolyStyle/Prefabs/HexTile_Pasture.prefab
+--- !u!64 &8416911077001731321
+=======
 --- !u!64 &3937985736556508003
+>>>>>>> 7336172901d9ced1d32c7674bd0323cff9467f38:Assets/ASSET STORE/Hexlands_LowPolyStyle/Prefabs/HexTile_Pasture.prefab
 MeshCollider:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}

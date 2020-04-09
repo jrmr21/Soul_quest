@@ -193,17 +193,12 @@ public class spirit_brain : MonoBehaviour
         float decalageX = 1.475f;
         int Xinit = 1994;
         float Xcenter = 1994.7375f;
-
         float decalageZ = 1.425f;
         float Zinit = -5.8f;
         float Zcenter = -5.0875f;
-
-
         this.ray = Camera.main.ScreenPointToRay(Input.mousePosition);
         int layerMask = 1 << 9;
         layerMask = ~layerMask;
-
-
         if (Input.GetMouseButtonDown(0))
         {
             if (coll.Raycast(ray, out hit, 100.0f))
@@ -243,8 +238,6 @@ public class spirit_brain : MonoBehaviour
                 {
                     transform.position = new Vector3(Xcenter, this.hit.point.y, Zcenter + (decalageZ * 3));
                 }
-
-
                 if (this.hit.point.x > Xinit + (decalageX) && this.hit.point.x < Xinit + (decalageX * 2) && this.hit.point.z > Zinit && this.hit.point.z < Zinit + (decalageZ))
                 {
                     transform.position = new Vector3(Xcenter + (decalageX), this.hit.point.y, Zcenter);
@@ -261,8 +254,6 @@ public class spirit_brain : MonoBehaviour
                 {
                     transform.position = new Vector3(Xcenter + (decalageX), this.hit.point.y, Zcenter + (decalageZ * 3));
                 }
-
-
                 if (this.hit.point.x > Xinit + (decalageX * 2) && this.hit.point.x < Xinit + (decalageX * 3) && this.hit.point.z > Zinit && this.hit.point.z < Zinit + (decalageZ))
                 {
                     transform.position = new Vector3(Xcenter + (decalageX * 2), this.hit.point.y, Zcenter);
@@ -279,8 +270,6 @@ public class spirit_brain : MonoBehaviour
                 {
                     transform.position = new Vector3(Xcenter + (decalageX * 2), this.hit.point.y, Zcenter + (decalageZ * 3));
                 }
-
-
                 if (this.hit.point.x > Xinit + (decalageX * 3) && this.hit.point.x < Xinit + (decalageX * 4) && this.hit.point.z > Zinit && this.hit.point.z < Zinit + (decalageZ))
                 {
                     transform.position = new Vector3(Xcenter + (decalageX * 3), this.hit.point.y, Zcenter);
@@ -297,8 +286,6 @@ public class spirit_brain : MonoBehaviour
                 {
                     transform.position = new Vector3(Xcenter + (decalageX * 3), this.hit.point.y, Zcenter + (decalageZ * 3));
                 }
-
-
                 if (this.hit.point.x > Xinit + (decalageX * 4) && this.hit.point.x < Xinit + (decalageX * 5) && this.hit.point.z > Zinit && this.hit.point.z < Zinit + (decalageZ))
                 {
                     transform.position = new Vector3(Xcenter + (decalageX * 4), this.hit.point.y, Zcenter);
@@ -315,8 +302,6 @@ public class spirit_brain : MonoBehaviour
                 {
                     transform.position = new Vector3(Xcenter + (decalageX * 4), this.hit.point.y, Zcenter + (decalageZ * 3));
                 }
-
-
                 if (this.hit.point.x > Xinit + (decalageX * 5) && this.hit.point.x < Xinit + (decalageX * 6) && this.hit.point.z > Zinit && this.hit.point.z < Zinit + (decalageZ))
                 {
                     transform.position = new Vector3(Xcenter + (decalageX * 5), this.hit.point.y, Zcenter);
@@ -333,8 +318,6 @@ public class spirit_brain : MonoBehaviour
                 {
                     transform.position = new Vector3(Xcenter + (decalageX * 5), this.hit.point.y, Zcenter + (decalageZ * 3));
                 }
-
-
                 if (this.hit.point.x > Xinit + (decalageX * 6) && this.hit.point.x < Xinit + (decalageX * 7) && this.hit.point.z > Zinit && this.hit.point.z < Zinit + (decalageZ))
                 {
                     transform.position = new Vector3(Xcenter + (decalageX * 6), this.hit.point.y, Zcenter);
@@ -351,8 +334,6 @@ public class spirit_brain : MonoBehaviour
                 {
                     transform.position = new Vector3(Xcenter + (decalageX * 6), this.hit.point.y, Zcenter + (decalageZ * 3));
                 }
-
-
                 if (this.hit.point.x > Xinit + (decalageX * 7) && this.hit.point.x < Xinit + (decalageX * 8) && this.hit.point.z > Zinit && this.hit.point.z < Zinit + (decalageZ))
                 {
                     transform.position = new Vector3(Xcenter + (decalageX * 7), this.hit.point.y, Zcenter);

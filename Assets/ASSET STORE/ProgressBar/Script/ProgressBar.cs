@@ -33,6 +33,7 @@ public class ProgressBar : MonoBehaviour
     private AudioSource audiosource;
     private Text txtTitle;
     private float barValue;
+
     public float BarValue
     {
         get { return barValue; }
