@@ -4692,9 +4692,9 @@ GameObject:
   m_Component:
   - component: {fileID: 1126113217}
   - component: {fileID: 1126113216}
-  - component: {fileID: 1126113215}
   - component: {fileID: 1126113218}
   - component: {fileID: 1126113219}
+  - component: {fileID: 1126113215}
   m_Layer: 0
   m_Name: GM
   m_TagString: Untagged
@@ -4717,9 +4717,9 @@ MonoBehaviour:
   SpiritPefab: {fileID: 8560223329007030993, guid: 58d2f9c1c31fa174e9196cde4f3767be,
     type: 3}
   m_scriptableObject:
-  - {fileID: 11400000, guid: da366113269476649b9ae93e468e7857, type: 2}
-  - {fileID: 11400000, guid: 624cb4f1b691634468ee987b25ead2c4, type: 2}
   - {fileID: 11400000, guid: 5227046a320a19847aed42e907e22c7f, type: 2}
+  - {fileID: 11400000, guid: 624cb4f1b691634468ee987b25ead2c4, type: 2}
+  - {fileID: 11400000, guid: da366113269476649b9ae93e468e7857, type: 2}
   - {fileID: 11400000, guid: 55e4eaac48f01cb49951619f1ba7f67f, type: 2}
   m_pictureShop: {fileID: 11400000, guid: 38765412c9cacf9498eb0187751a531e, type: 2}
 --- !u!114 &1126113216
