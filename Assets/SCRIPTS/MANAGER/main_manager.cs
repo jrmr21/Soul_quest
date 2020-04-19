@@ -7,7 +7,7 @@ public class main_manager : SpiritList
     //private static bool        status      = false;
     private Vector3     MainPos;
     private int         money       = 4;
-    private int Life = 100;
+    private int         Life        = 100;
 
     public GameObject   MapMain;
 
