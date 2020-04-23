@@ -16,6 +16,7 @@ public class Fight_manager : SpiritList
         return (true);
     }
 
+    // add a character from main on fight map 
     public int addToFightTab(GameObject character, string team)
     {
         if (string.Compare(team, GlobalVar.player_front) == 0)
@@ -38,6 +39,7 @@ public class Fight_manager : SpiritList
         return (-1);
     }
 
+    // add to main a character in fight map
     public void removeToFightTab(int index, string team)
     {
         Debug.Log("rm player ");
@@ -102,6 +104,7 @@ public class Fight_manager : SpiritList
         
     }
 
+    // disable Fight mode in all brain character on fight map 
     public void EndFightMode()
     {
         for (int i = 0; i < this.GetListSize(); i++)
